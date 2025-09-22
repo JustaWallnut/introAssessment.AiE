@@ -1,0 +1,11 @@
+﻿  Functions.cpp
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Functions.cpp')
+  
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(200,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(201,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(202,20): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(260,1): warning C4715: 'stringUtil::replace': not all control paths return a value
+  AiE10.vcxproj -> C:\Users\s258016\Documents\GitHub\introAssessment.AiE\x64\Debug\AiE10.exe
