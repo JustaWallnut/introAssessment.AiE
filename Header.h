@@ -19,4 +19,7 @@ public:
 	string toLower(string msg);
 	int find(string msg, string findString);
 	int find(int index, string msg, string findString);
+	string replace(string msg, string findString, string replaceString);
+	string ReadFromConsole();
+	void WriteToConsole(string msg);
 };

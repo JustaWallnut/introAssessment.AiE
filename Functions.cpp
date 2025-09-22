@@ -150,3 +150,79 @@ int stringUtil::find(int index, string msg, string findString) {
 		return -1;
 	}
 }
+// Currently non-functional
+string stringUtil::replace(string msg, string findString, string replaceString) {
+	int msgLength = 0;
+	int findLength = 0;
+	int replaceLength = 0;
+	for (char i : msg) {
+		msgLength++;
+	}
+	for (char i : findString) {
+		findLength++;
+	}
+	for (char i : replaceString) {
+		replaceLength++;
+	}
+	if (findLength > msgLength) {
+		return "-1";
+	}
+	else {
+		// Goes through every character of msg and checks with the first character of findString
+		// If it finds a common character, it does repeated checks with the further characters
+		// if it all connects, start replacing strings, then goes back to checking
+		int location;
+		bool found = false;
+		for (int i = 0; i <= msgLength - findLength; i++) {
+			if (msg[i] == findString[0]) {
+				location = i;
+				bool found = false;
+				for (int a = 1; a <= findLength; a++) {
+					if (a == findLength) {
+						if (findLength < replaceLength) {
+							string tempMsg = msg;
+							string newMsg = "";
+							int e = 0;
+							for (int c = 0; c <= msgLength - findLength + replaceLength; c++) {
+								if (c == location) {
+									for (int f = 0; f <= replaceLength; f++, c++) {
+										newMsg += replaceString[f];
+									}
+									e += findLength;
+									c -= 1;
+									// programmers will see this code and kill themselves
+								}
+								else {
+									newMsg += tempMsg[e];
+									e += 1;
+								}
+							}
+							msg = newMsg;
+						}
+						else if (findLength == replaceLength) {
+							for (int b = 0; b <= findLength; b++) {
+								msg[i + b] = replaceString[b];
+							}
+						}
+						else {
+
+						}
+						found = true;
+						if (!(msg[i + a] == findString[0 + a])) {
+							break;
+						}
+					}
+				}
+			}
+			if (!found) { return "-1"; }
+		}
+	}
+}
+string stringUtil::ReadFromConsole() {
+	string input = "";
+	cin >> input;
+	return input;
+}
+void stringUtil::WriteToConsole(string msg) {
+	print(msg);
+}
