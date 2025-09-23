@@ -10,7 +10,7 @@ using namespace std;
 //	stringFunc.WriteToConsole(msg);
 //}
 
-//int main() {
-//	runAllTests();
-//}
+int main() {
+	runAllTests();
+}
 

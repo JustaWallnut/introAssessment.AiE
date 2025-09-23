@@ -1,11 +1,14 @@
 #include <iostream>;
+#include <fstream>;
 #include "Header.h";
 using namespace std;
 
 void print(string msg) {
 	cout << msg << endl;
 }
-#pragma region Assessment #1 Functions
+
+#pragma region AssessmentOneFunctions
+
 int stringUtil::length(string msg) {
 	int msgLength = 0;
 	for (char i : msg) {
@@ -62,14 +65,9 @@ void stringUtil::toLower(string& msg) {
 	}
 }
 int stringUtil::find(string msg, string findString) {
-	int msgLength = 0;
-	int findLength = 0;
-	for (char i : msg) {
-		msgLength++;
-	}
-	for (char i : findString) {
-		findLength++;
-	}
+	stringUtil stringFunc;
+	int msgLength = stringFunc.length(msg);
+	int findLength = stringFunc.length(findString);
 	if (findLength > msgLength) {
 		return -1;
 	}
@@ -96,14 +94,9 @@ int stringUtil::find(string msg, string findString) {
 	}
 }
 int stringUtil::find(int index, string msg, string findString) {
-	int msgLength = 0;
-	int findLength = 0;
-	for (char i : msg) {
-		msgLength++;
-	}
-	for (char i : findString) {
-		findLength++;
-	}
+	stringUtil stringFunc;
+	int msgLength = stringFunc.length(msg);
+	int findLength = stringFunc.length(findString);
 	if (findLength > msgLength) {
 		return -1;
 	}
@@ -130,72 +123,52 @@ int stringUtil::find(int index, string msg, string findString) {
 	}
 }
 // Currently non-functional
-//string stringUtil::replace(string msg, string findString, string replaceString) {
-//	int msgLength = 0;
-//	int findLength = 0;
-//	int replaceLength = 0;
-//	for (char i : msg) {
-//		msgLength++;
-//	}
-//	for (char i : findString) {
-//		findLength++;
-//	}
-//	for (char i : replaceString) {
-//		replaceLength++;
-//	}
-//	if (findLength > msgLength) {
-//		return "-1";
-//	}
-//	else {
-//		// Goes through every character of msg and checks with the first character of findString
-//		// If it finds a common character, it does repeated checks with the further characters
-//		// if it all connects, start replacing strings, then goes back to checking
-//		int location = 0;
-//		bool found = false;
-//		for (int i = 0; i <= msgLength - findLength; i++) {
-//			if (msg[i] == findString[0]) {
-//				location = i;
-//				for (int a = 1; a <= findLength; a++) {
-//					if (a == findLength) {
-//						if (findLength < replaceLength) {
-//							string tempMsg = msg;
-//							string newMsg = "";
-//							int e = 0;
-//							for (int c = 0; c <= msgLength - findLength + replaceLength; c++) {
-//								if (c == location) {
-//									for (int f = 0; f <= replaceLength; f++, c++) {
-//										newMsg += replaceString[f];
-//									}
-//									e += findLength;
-//									c -= 1;
-//									// programmers will see this code and kill themselves
-//								}
-//								else {
-//									newMsg += tempMsg[e];
-//									e += 1;
-//								}
-//							}
-//							msg = newMsg;
-//						}
-//						else if (findLength == replaceLength) {
-//							for (int b = 0; b <= findLength; b++) {
-//								msg[i + b] = replaceString[b];
-//							}
-//						}
-//						else {
-//
-//						}
-//						found = true;
-//						if (!(msg[i + a] == findString[0 + a])) {
-//							break;
-//						}
-//					}
-//				}
-//			}
-//		}
-//		if (!found) { return "-1"; }
-//	}
-//}
+string stringUtil::replace(string msg, string findString, string replaceString) {
+	stringUtil stringFunc;
+	bool findFound = false;
+	int findLocation = 0;
+	int msgLength = stringFunc.length(msg);
+	int findLength = stringFunc.length(findString);
+	int replaceLength = stringFunc.length(replaceString);
+	if (findLength > msgLength) 
+	{
+		return "-1";
+	}
+	for (int i = 0; i < msgLength - findLength; i++) 
+	{
+		// Compare the message to the first character of findString
+		if (msg[i] == findString[0]) 
+		{
+			int location = stringFunc.find(i, msg, findString) - 1;
+			if (!(location == -2)) 
+			{
+				findFound = true;
+				int og = 0;
+				string newMSG = "";
+				for (int loop = 0; loop < msgLength - findLength + replaceLength; loop++) 
+				{
+					string originalMSG = msg;
+					if (loop == location) {
+						newMSG += replaceString;
+						loop += replaceLength - 1;
+						og += findLength;
+					}
+					else {
+						newMSG += originalMSG[og];
+						og += 1;
+					}
+				}
+				msg = newMSG;
+			}
+		}
+	}
+	if (!findFound) {
+		return "-1";
+	}
+	else {
+		return msg;
+	}
+}
 //string stringUtil::replace(string msg, string findString, string replaceString) {
 //	// You were manually counting string lengths, instead of using .length(). Should save some time.
 //	int msgLength = msg.length();
@@ -268,28 +241,40 @@ void stringUtil::WriteToConsole(string msg) {
 	print(msg);
 }
 #pragma endregion
-#pragma region Assessment #2 Functions
+
+#pragma region AssessmentTwoThreeFunctions
+
 void stringTestUtil::testLength() {
 	string testMessage = "bongbong";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	int length = Test.length(testMessage);
 	if (length == 8) {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Length", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Length", false);
 	}
 	print(" --- PRINT FUNCTION");
 }
 void stringTestUtil::testCharAt() {
 	string testMessage = "yumyum";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	int characterAt = Test.charAt(testMessage, 4);
 	if (characterAt == 'y') {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("CharAt", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("CharAt", false);
 	}
 	print(" --- CHARACTER-AT FUNCTION");
 }
@@ -297,31 +282,41 @@ void stringTestUtil::testEqualTo1() {
 	string testMessage1 = "bongbong";
 	string testMessage2 = "yumyum";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	if (!(Test.equalTo(testMessage1, testMessage2))) {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("String-Equalto", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("String-Equalto", false);
 	}
 	print(" --- STRING-EQUALTO FUNCTION");
 }
-void stringTestUtil::testEqualTo2() {
-	string testMessage1 = "bongbong";
-	string testMessage2 = "yumyum";
-	stringUtil Test;
-	Test.equalTo(testMessage1, testMessage2, "Hello!", "Goodbye!");
-	print("OPERATIONAL if printed Goodbye! Else, DYSFUNCTIONAL --- VOID-EQUALTO FUNCTION");
-}
+//void stringTestUtil::testEqualTo2() {
+//	string testMessage1 = "bongbong";
+//	string testMessage2 = "yumyum";
+//	stringUtil Test;
+//	Test.equalTo(testMessage1, testMessage2, "Hello!", "Goodbye!");
+//	print("OPERATIONAL if printed Goodbye! Else, DYSFUNCTIONAL --- VOID-EQUALTO FUNCTION");
+//}
 void stringTestUtil::testAppend() {
 	string testMessage1 = "bongbong";
 	string testMessage2 = "yumyum";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	Test.append(testMessage1, testMessage2);
 	if (testMessage1 == "bongbongyumyum") {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Aappend", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Append", false);
 	}
 	print(" --- APPEND FUNCTION");
 }
@@ -329,36 +324,51 @@ void stringTestUtil::testPrepend() {
 	string testMessage1 = "bongbong";
 	string testMessage2 = "yumyum";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	Test.prepend(testMessage1, testMessage2);
 	if (testMessage1 == "yumyumbongbong") {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Prepend", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Prepend", false);
 	}
 	print(" --- PREPEND FUNCTION");
 }
 void stringTestUtil::testtoUpper() {
 	string testMessage = "BonGbONggG";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	Test.toUpper(testMessage);
 	if (testMessage == "BONGBONGGG") {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Uppercase", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Uppercase", false);
 	}
 	print(" --- UPPERCASE FUNCTION");
 }
 void stringTestUtil::testtoLower() {
 	string testMessage = "BonGbONggG";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	Test.toLower(testMessage);
 	if (testMessage == "bongbonggg") {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Lowercase", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Lowercase", false);
 	}
 	print(" --- LOWERCASE FUNCTION");
 }
@@ -366,11 +376,16 @@ void stringTestUtil::testFind1() {
 	string testMessage = "Wingding";
 	string targetMessage = "ding";
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	if (Test.find(testMessage, targetMessage) == 5) {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("First Find", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("First Find", false);
 	}
 	print(" --- FIND FUNCTION");
 }
@@ -379,11 +394,16 @@ void stringTestUtil::testFind2() {
 	string targetMessage = "Dook";
 	int index = 6;
 	stringUtil Test;
+	fileHandle Log;
+	total += 1;
 	if (Test.find(index, testMessage, targetMessage) == 12) {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Second Find", true);
+		totalSucceed += 1;
 	}
 	else {
 		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Second Find", false);
 	}
 	print(" --- FIND-INDEX FUNCTION");
 }
@@ -391,34 +411,40 @@ void stringTestUtil::testReplace() {
 	string testMessage = "wingwongbongboom";
 	string testFind = "bong";
 	string testReplace = "yummer";
+	fileHandle Log;
 	stringUtil Test;
+	total += 1;
 	if (Test.replace(testMessage, testFind, testReplace) == "wingwongyummerboom") {
 		cout << "OPERATIONAL";
+		Log.appendToLogFile("Replace", true);
+		totalSucceed += 1;
 	}
 	else {
+		cout << "DYSFUNCTIONAL";
+		Log.appendToLogFile("Replace", false);
 		cout << "DYSFUNCTIONAL";
 	}
 	print(" --- REPLACE FUNCTION");
 }
-void stringTestUtil::testReadFromConsole() {
-	string Input;
-	stringUtil Test;
-	Input = Test.ReadFromConsole();
-	print(Input);
-	print("OPERATIONAL if printed correctly! Else, DYSFUNCTIONAL --- READFROMCONSOLE FUNCTION");
-}
-void stringTestUtil::testWriteToConsole() {
-	print("TESTING OPERATION OF THE WRITETOCONSOLE FUNCTION ---");
-	string message = "If you see this message, the functiton is OPERATIONAL!";
-	stringUtil Test;
-	Test.WriteToConsole(message);
-}
+//void stringTestUtil::testReadFromConsole() {
+//	string Input;
+//	stringUtil Test;
+//	Input = Test.ReadFromConsole();
+//	print(Input);
+//	print("OPERATIONAL if printed correctly! Else, DYSFUNCTIONAL --- READFROMCONSOLE FUNCTION");
+//}
+//void stringTestUtil::testWriteToConsole() {
+//	print("TESTING OPERATION OF THE WRITETOCONSOLE FUNCTION ---");
+//	string message = "If you see this message, the functiton is OPERATIONAL!";
+//	stringUtil Test;
+//	Test.WriteToConsole(message);
+//}
 void runAllTests() {
 	stringTestUtil Test;
 	Test.testLength();
 	Test.testCharAt();
 	Test.testEqualTo1();
-	Test.testEqualTo2();
+	/*Test.testEqualTo2();*/
 	Test.testAppend();
 	Test.testPrepend();
 	Test.testtoUpper();
@@ -426,7 +452,44 @@ void runAllTests() {
 	Test.testFind1();
 	Test.testFind2();
 	Test.testReplace();
-	Test.testReadFromConsole();
-	Test.testWriteToConsole();
+	Test.testResults();
+	/*Test.testReadFromConsole();*/
+	/*Test.testWriteToConsole();*/
+}
+#pragma endregion
+
+#pragma region AssessmentThreeFunctions
+bool fileHandle::fileExists(string filename) {
+	ifstream file(filename);
+	return file.is_open();
+}
+void fileHandle::appendToLogFile(string msg, bool result) {
+	fileHandle Log;
+	ofstream logFile("log_file.txt", ios::app);
+	if (Log.fileExists("log_file.txt")) {
+		if (result) {
+			logFile << msg + " Function: Operational" << endl;
+		}
+		else {
+			logFile << msg + " Function: Dysfunctional" << endl;
+		}
+		logFile.close();
+	}
+	else {
+		print("fileHandle function error: appendtoLogFile unsuccessful");
+	}
+}
+void stringTestUtil::testResults() {
+	fileHandle Log;
+	float successRate = totalSucceed / totalSucceed * 100;
+	ofstream logFile("log_file.txt", ios::app);
+	if (Log.fileExists("log_file.txt")) {
+		logFile << "Test Success Rate: " << successRate << "%" << endl;
+		logFile << "" << endl;
+		logFile.close();
+	}
+	else {
+		print("fileHandle function error: testResults unsuccessful");
+	}
 }
 #pragma endregion

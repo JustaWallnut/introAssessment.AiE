@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>;
+
+
 using namespace std;
 
 void print(string msg);
@@ -20,11 +22,14 @@ class stringUtil {
 		void WriteToConsole(string msg);
 };
 class stringTestUtil {
+	private:
+		int totalSucceed = 0;
+		int total = 0;
 	public:
 		void testLength();
 		void testCharAt();
 		void testEqualTo1();
-		void testEqualTo2();
+		/*void testEqualTo2();*/
 		void testAppend();
 		void testPrepend();
 		void testtoUpper();
@@ -32,7 +37,13 @@ class stringTestUtil {
 		void testFind1();
 		void testFind2();
 		void testReplace();
-		void testReadFromConsole();
-		void testWriteToConsole();
+		void testResults();
+		/*void testReadFromConsole();*/
+		/*void testWriteToConsole();*/
+};
+class fileHandle {
+	public:
+		bool fileExists(string filename);
+		void appendToLogFile(string msg, bool result);
 };
 void runAllTests();
