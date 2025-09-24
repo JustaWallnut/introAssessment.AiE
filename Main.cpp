@@ -2,6 +2,8 @@
 #include "Header.h";
 using namespace std;
 
+// Functions for Assessments #1
+// 
 //int main() {
 //	stringUtil stringFunc;
 //	string msg = "Hello ";
@@ -10,7 +12,8 @@ using namespace std;
 //	stringFunc.WriteToConsole(msg);
 //}
 
-int main() {
-	runAllTests();
-}
+//Function for Assessments #2-3
+//int main() {
+//	runAllTests();
+//}
 

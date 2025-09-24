@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|solutionrelative:Main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|solutionrelative:Functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|solutionrelative:Header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|solutionrelative:Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,12 +31,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Main2.cpp",
+              "DocumentMoniker": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main2.cpp",
+              "RelativeDocumentMoniker": "Main2.cpp",
+              "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main2.cpp*",
+              "RelativeToolTip": "Main2.cpp*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-23T21:31:48.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Functions.cpp",
               "DocumentMoniker": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Functions.cpp",
               "RelativeDocumentMoniker": "Functions.cpp",
-              "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Functions.cpp",
-              "RelativeToolTip": "Functions.cpp",
-              "ViewState": "AgIAAGUBAAAAAAAAAAAAAMYBAAAUAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Functions.cpp*",
+              "RelativeToolTip": "Functions.cpp*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-22T17:16:29.134Z",
               "EditorCaption": ""
@@ -44,25 +57,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Main.cpp",
-              "DocumentMoniker": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main.cpp",
-              "RelativeDocumentMoniker": "Main.cpp",
-              "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main.cpp",
-              "RelativeToolTip": "Main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-22T17:16:00.384Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Header.h",
               "DocumentMoniker": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Header.h",
               "RelativeDocumentMoniker": "Header.h",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Header.h",
               "RelativeToolTip": "Header.h",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-09-22T16:48:39.004Z",
               "EditorCaption": ""

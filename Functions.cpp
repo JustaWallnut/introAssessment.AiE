@@ -1,10 +1,17 @@
 #include <iostream>;
 #include <fstream>;
+#include <string>;
+#include <stdlib.h>;
+#include <windows.h>;
 #include "Header.h";
 using namespace std;
 
 void print(string msg) {
 	cout << msg << endl;
+}
+void printAndWait(float seconds, string msg) {
+	print(msg);
+	Sleep(seconds * 1000);
 }
 
 #pragma region AssessmentOneFunctions
@@ -139,12 +146,16 @@ string stringUtil::replace(string msg, string findString, string replaceString) 
 		// Compare the message to the first character of findString
 		if (msg[i] == findString[0]) 
 		{
+			// Check for the entire findString starting at its location
 			int location = stringFunc.find(i, msg, findString) - 1;
-			if (!(location == -2)) 
+			if (location != -2) 
 			{
 				findFound = true;
 				int og = 0;
 				string newMSG = "";
+				// Loop through the message until it reaches location
+				// Then, it adds the replaceString message to the string
+				// Goes back to writing the rest of the message afterwards
 				for (int loop = 0; loop < msgLength - findLength + replaceLength; loop++) 
 				{
 					string originalMSG = msg;
@@ -162,6 +173,7 @@ string stringUtil::replace(string msg, string findString, string replaceString) 
 			}
 		}
 	}
+	// Returns error if findString isn't found.
 	if (!findFound) {
 		return "-1";
 	}
@@ -493,3 +505,10 @@ void stringTestUtil::testResults() {
 	}
 }
 #pragma endregion
+
+void Rooms::goNorth(Rooms& currentRoom) {
+	
+}
+void Entrance::goNorth(Rooms& currentRoom) {
+	
+}

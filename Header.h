@@ -5,6 +5,7 @@
 using namespace std;
 
 void print(string msg);
+void printAndWait(float seconds, string msg);
 class stringUtil {
 	public:
 		int length(string msg);
@@ -47,3 +48,11 @@ class fileHandle {
 		void appendToLogFile(string msg, bool result);
 };
 void runAllTests();
+class Rooms {
+	public:
+		virtual void goNorth(Rooms& currentRoom) = 0;
+};
+class Entrance : public Rooms {
+	public:
+		void goNorth(Rooms& currentRoom) override;
+};
