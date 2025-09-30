@@ -6,6 +6,10 @@
 #include "Header.h";
 using namespace std;
 
+Inventory inventory;
+Locks lock;
+RoomsVisited track;
+
 void print(string msg) {
 	cout << msg << endl;
 }
@@ -100,6 +104,35 @@ int stringUtil::find(string msg, string findString) {
 		return -1;
 	}
 }
+bool stringUtil::boolFind(string msg, string findString) {
+	stringUtil stringFunc;
+	int msgLength = stringFunc.length(msg);
+	int findLength = stringFunc.length(findString);
+	if (findLength > msgLength) {
+		return false;
+	}
+	else {
+		// Goes through every character of msg and checks with the first character of findString
+		// If it finds a common character, it does repeated checks with the further characters
+		// if it all connects, break the loop and return the location its found
+		int location;
+		for (int i = 0; i <= msgLength - findLength; i++) {
+			if (msg[i] == findString[0]) {
+				location = i;
+				bool found = false;
+				for (int a = 1; a <= findLength; a++) {
+					if (a == findLength) {
+						return true;
+					}
+					if (!(msg[i + a] == findString[0 + a])) {
+						break;
+					}
+				}
+			}
+		}
+		return false;
+	}
+}
 int stringUtil::find(int index, string msg, string findString) {
 	stringUtil stringFunc;
 	int msgLength = stringFunc.length(msg);
@@ -129,7 +162,6 @@ int stringUtil::find(int index, string msg, string findString) {
 		return -1;
 	}
 }
-// Currently non-functional
 string stringUtil::replace(string msg, string findString, string replaceString) {
 	stringUtil stringFunc;
 	bool findFound = false;
@@ -244,6 +276,18 @@ string stringUtil::replace(string msg, string findString, string replaceString) 
 //		if (!found) { return "-1"; }
 //	}
 //}
+string stringUtil::removeSpaces(string msg) {
+	for (int i = 0; i < msg.length(); i++)
+	{
+		if (msg[i] == ' ')
+		{
+			//snatched from the internet sorry :(
+			msg.erase(msg.begin() + i);
+			i--;
+		}
+	}
+	return msg;
+}
 string stringUtil::ReadFromConsole() {
 	string input = "";
 	cin >> input;
@@ -506,9 +550,385 @@ void stringTestUtil::testResults() {
 }
 #pragma endregion
 
-void Rooms::goNorth(Rooms& currentRoom) {
-	
+# pragma region AssessmentFourFunctions
+
+void Rooms::inRoomLogic(string &currentRoom) {
+
 }
-void Entrance::goNorth(Rooms& currentRoom) {
-	
+void Rooms::cantGoDirection() {
+	printAndWait(3, "There's nowhere to go in this direction!");
 }
+void Rooms::useItem(string item) {
+	printAndWait(2.5, "Hm, didn't seem to work.");
+}
+void Rooms::searchRoom() {
+
+}
+
+// Parking Lot
+void Entrance::inRoomLogic(string &currentRoom) {
+	stringUtil stringFunc;
+	Entrance entranceRoom;
+	string input;
+	while (currentRoom == "entranceRoom")
+	{
+		track.entranceRoom = true;
+		print("You stand in the Pizzeria's parking lot.");
+		cout << endl;
+		print("Type help to pull up all valid commands");
+		cout << endl;
+		compass();
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			entranceRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			entranceRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			entranceRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			entranceRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			entranceRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			entranceRoom.useItem(input);
+			cout << endl;
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void Entrance::goNorth(string &currentRoom) {
+	currentRoom = "carTrunk";
+}
+void Entrance::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void Entrance::goSouth(string& currentRoom) {
+	currentRoom = "pizzeriaDoors";
+}
+void Entrance::goEast(string& currentRoom) {
+	cantGoDirection();
+}
+void Entrance::searchRoom() {
+	system("cls");
+	print("In the dark of night, it's hard to find anything out here");
+	printAndWait(6.5, "At the very least, you should try to approach the pizzeria");
+	system("cls");
+}
+void Entrance::compass() {
+	cout << "          ";
+	if (track.carTrunkRoom) {
+		print("Your Car");
+	}
+	else {
+		print("???");
+	}
+	print("          /\\");
+	print("          ||");
+	cout << "< ======= -- ======= >" << endl;
+	print("          ||");
+	print("          \\/");
+	cout << "          ";
+	if (track.pizzeriaDoorsRoom) {
+		print("Pizzeria Door");
+	}
+	else {
+		print("???");
+	}
+}
+
+void CarTrunk::inRoomLogic(string &currentRoom) {
+	stringUtil stringFunc;
+	CarTrunk carTrunkRoom;
+	string input;
+	while (currentRoom == "carTrunk")
+	{
+		track.carTrunkRoom = true;
+		print("You return to your car's trunk.");
+		cout << endl;
+		print("Type help to pull up all valid commands");
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			carTrunkRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			carTrunkRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			carTrunkRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			carTrunkRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			carTrunkRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			carTrunkRoom.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void CarTrunk::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void CarTrunk::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void CarTrunk::goSouth(string& currentRoom) {
+	currentRoom = "entranceRoom";
+}
+void CarTrunk::goEast(string& currentRoom) {
+	cantGoDirection();
+}
+void CarTrunk::searchRoom() {
+	system("cls");
+	if (inventory.checkForItem("Crowbar") && inventory.checkForItem("Pizzeria Keys"))
+	{
+		print("There's nothing else to find here");
+		printAndWait(4, "Only your lint and an old water bottle");
+	}
+	else
+	{
+		inventory.collectItem("Crowbar");
+		inventory.collectItem("Pizzeria Keys");
+		print("It's a good thing you checked your car!");
+		print("You pick up your crowbar and pizzeria keys from your car");
+		printAndWait(7.5, "Can't explore without these!");
+	}
+	system("cls");
+}
+
+void PizzeriaDoors::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	PizzeriaDoors pizzeriaDoorsRoom;
+	string input;
+	while (currentRoom == "pizzeriaDoors")
+	{
+		track.pizzeriaDoorsRoom = true;
+		print("At the doors of the rundown Pizzeria building, its sign towering above.");
+		cout << endl;
+		print("Type help to pull up all valid commands");
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			pizzeriaDoorsRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			pizzeriaDoorsRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			pizzeriaDoorsRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			pizzeriaDoorsRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			pizzeriaDoorsRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			pizzeriaDoorsRoom.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void PizzeriaDoors::goNorth(string& currentRoom) {
+	currentRoom = "entranceRoom";
+}
+void PizzeriaDoors::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void PizzeriaDoors::goSouth(string& currentRoom) {
+	if (lock.frontDoorUnlocked)
+	{
+		currentRoom = "frontDesk";
+	}
+	else
+	{
+		system("cls");
+		printAndWait(4, "You try the front doors, but it seems to be locked.");
+	}
+}
+void PizzeriaDoors::goEast(string& currentRoom) {
+	cantGoDirection();
+}
+void PizzeriaDoors::useItem(string item) {
+	if (inventory.checkForItem(item, "pizzeria keys")) {
+		lock.frontDoorUnlocked = true;
+		inventory.useItem("pizzeria keys");
+		printAndWait(4, "You turn the keys, unlocking the doors to the pizzeria.");
+	}
+	else if (inventory.checkForItem(item, "crowbar")) {
+		printAndWait(4, "As much as you'd love to use your crowbar, you'd rather save it for later.");
+	}
+	else {
+		printAndWait(2.5, "Doesn't seem like you can use these here.");
+	}
+	system("cls");
+}
+void PizzeriaDoors::searchRoom() {
+	system("cls");
+	print("The sign reads: Freddy's Fazbear Pizzeria");
+	if (lock.frontDoorUnlocked)
+	{
+		printAndWait(4.5, "The nasty door stands ajar, a horrifying aura eminating from inside the pizzeria.");
+	}
+	else
+	{
+		printAndWait(4.5, "The doors stand there, rigid and closed, its glass doors dirtied and scratched.");
+	}
+	system("cls");
+}
+
+void Inventory::collectItem(string newItem) {
+	for (int i = 0; i < 10; i++)
+	{
+		if (Items[i].empty())
+		{
+			Items[i] = newItem;
+			break;
+		}
+	}
+}
+void Inventory::useItem(string Item) {
+	stringUtil stringFunc;
+	stringFunc.toLower(Item);
+	Item = stringFunc.removeSpaces(Item);
+	for (int i = 0; i != Item.length(); i++)
+	{
+		string tempVar = Items[i];
+		stringFunc.toLower(tempVar);
+		tempVar = stringFunc.removeSpaces(tempVar);
+		if (tempVar == Item)
+		{
+			Items[i] = "";
+		}
+	}
+}
+bool Inventory::checkForItem(string item) {
+	stringUtil stringFunc;
+	for (string a : Items)
+	{
+		string tempVar = a;
+		stringFunc.toLower(tempVar);
+		if (tempVar == item)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool Inventory::checkForItem(string typedItem, string requiredItem) {
+	stringUtil stringFunc;
+	for (string a : Items)
+	{
+		string tempVar = a;
+		stringFunc.toLower(tempVar);
+		tempVar = stringFunc.removeSpaces(tempVar);
+		typedItem = stringFunc.removeSpaces(typedItem);
+		requiredItem = stringFunc.removeSpaces(requiredItem);
+		if (tempVar == typedItem)
+		{
+			if (tempVar == requiredItem)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+void Inventory::checkInventory() {
+	system("cls");
+	print("===== Inventory =====");
+	for (int i = 0; i < 10; i++) {
+		cout << "[" << i+1 << "] ";
+		if (!Items[i].empty())
+		{
+			print(Items[i]);
+		}
+		else { cout << endl; }
+	}
+	cout << endl;
+}
+void HelpCommand() {
+	system("cls");
+	print("north --- Travel North (if possible)");
+	print("west --- Travel West (if possible)");
+	print("south --- Travel South (if possible)");
+	print("east --- Travel East (if possible)");
+	print("search --- Search the room");
+	print("use [item] --- Use an item that's in your inventory");
+	print("inventory --- Shows your current inventory");
+	cout << endl;
+}
+# pragma endregion

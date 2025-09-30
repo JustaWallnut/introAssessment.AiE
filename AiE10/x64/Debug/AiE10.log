@@ -8,16 +8,6 @@ C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(6,10): warni
 C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   (compiling source file 'Functions.cpp')
   
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(14,16): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(496,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Main2.cpp
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'Main2.cpp')
-  
-  Generating Code...
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(18,16): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(540,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   AiE10.vcxproj -> C:\Users\s258016\Documents\GitHub\introAssessment.AiE\x64\Debug\AiE10.exe
