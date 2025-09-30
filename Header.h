@@ -73,7 +73,6 @@ class Entrance : public Rooms {
 		void goSouth(string& currentRoom) override;
 		void goEast(string& currentRoom) override;
 		void searchRoom() override;
-		void compass();
 };
 class CarTrunk : public Rooms {
 	public:
@@ -94,6 +93,16 @@ class PizzeriaDoors : public Rooms {
 		void useItem(string item) override;
 		void searchRoom() override;
 };
+class FrontDesk : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void searchRoom() override;
+};
+
 class Inventory {
 	private:
 		string Items[10];
@@ -109,8 +118,11 @@ struct Locks
 	bool frontDoorUnlocked = false;
 };
 struct RoomsVisited {
-	bool entranceRoom = false;
-	bool carTrunkRoom = false;
-	bool pizzeriaDoorsRoom = false;
+	string entranceName = "???";
+	string carTrunkName = "???";
+	string pizzeriaDoorsName = "???";
+	string frontDeskName = "???";
+	string diningAreaName = "???";
 };
+void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();

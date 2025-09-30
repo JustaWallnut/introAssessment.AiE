@@ -13,10 +13,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|solutionrelative:Main2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{474ACB01-FB58-463A-AEB1-A50EA70593CC}|AiE10.vcxproj|solutionrelative:Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,24 +22,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Main.cpp",
-              "DocumentMoniker": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main.cpp",
-              "RelativeDocumentMoniker": "Main.cpp",
-              "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main.cpp",
-              "RelativeToolTip": "Main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-29T14:59:12.414Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -53,7 +36,7 @@
               "RelativeDocumentMoniker": "Main2.cpp",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main2.cpp",
               "RelativeToolTip": "Main2.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-23T21:31:48.564Z",
               "EditorCaption": ""
@@ -66,7 +49,7 @@
               "RelativeDocumentMoniker": "Functions.cpp",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Functions.cpp",
               "RelativeToolTip": "Functions.cpp",
-              "ViewState": "AgIAAHICAAAAAAAAAAAAAIkCAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAIYCAAAAAAAAAADgv/EDAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-22T17:16:29.134Z",
               "EditorCaption": ""
@@ -79,7 +62,7 @@
               "RelativeDocumentMoniker": "Header.h",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Header.h",
               "RelativeToolTip": "Header.h",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAWwEsAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAF8AAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-09-22T16:48:39.004Z",
               "EditorCaption": ""

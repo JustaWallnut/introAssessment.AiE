@@ -565,6 +565,7 @@ void Rooms::searchRoom() {
 
 }
 
+# pragma region Entrance
 // Parking Lot
 void Entrance::inRoomLogic(string &currentRoom) {
 	stringUtil stringFunc;
@@ -572,12 +573,12 @@ void Entrance::inRoomLogic(string &currentRoom) {
 	string input;
 	while (currentRoom == "entranceRoom")
 	{
-		track.entranceRoom = true;
+		track.entranceName = "Parking Lot";
 		print("You stand in the Pizzeria's parking lot.");
 		cout << endl;
-		print("Type help to pull up all valid commands");
+		print("Type help to see all valid commands");
 		cout << endl;
-		compass();
+		compass(track.carTrunkName, "null", track.pizzeriaDoorsName, "null");
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
@@ -642,38 +643,21 @@ void Entrance::searchRoom() {
 	printAndWait(6.5, "At the very least, you should try to approach the pizzeria");
 	system("cls");
 }
-void Entrance::compass() {
-	cout << "          ";
-	if (track.carTrunkRoom) {
-		print("Your Car");
-	}
-	else {
-		print("???");
-	}
-	print("          /\\");
-	print("          ||");
-	cout << "< ======= -- ======= >" << endl;
-	print("          ||");
-	print("          \\/");
-	cout << "          ";
-	if (track.pizzeriaDoorsRoom) {
-		print("Pizzeria Door");
-	}
-	else {
-		print("???");
-	}
-}
+# pragma endregion
 
+#pragma region CarTrunk
 void CarTrunk::inRoomLogic(string &currentRoom) {
 	stringUtil stringFunc;
 	CarTrunk carTrunkRoom;
 	string input;
 	while (currentRoom == "carTrunk")
 	{
-		track.carTrunkRoom = true;
+		track.carTrunkName = "Your Car";
 		print("You return to your car's trunk.");
 		cout << endl;
-		print("Type help to pull up all valid commands");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", "null", track.entranceName, "null");
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
@@ -747,17 +731,21 @@ void CarTrunk::searchRoom() {
 	}
 	system("cls");
 }
+#pragma endregion
 
+#pragma region PizzeriaDoors
 void PizzeriaDoors::inRoomLogic(string& currentRoom) {
 	stringUtil stringFunc;
 	PizzeriaDoors pizzeriaDoorsRoom;
 	string input;
 	while (currentRoom == "pizzeriaDoors")
 	{
-		track.pizzeriaDoorsRoom = true;
+		track.pizzeriaDoorsName = "Pizzeria Doors";
 		print("At the doors of the rundown Pizzeria building, its sign towering above.");
 		cout << endl;
-		print("Type help to pull up all valid commands");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass(track.entranceName, "null", track.frontDeskName, "null");
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
@@ -849,6 +837,86 @@ void PizzeriaDoors::searchRoom() {
 	}
 	system("cls");
 }
+#pragma endregion
+
+# pragma region FrontDesk
+void FrontDesk::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	FrontDesk frontDeskRoom;
+	string input;
+	while (currentRoom == "frontDesk")
+	{
+		track.frontDeskName = "Front Desk";
+		print("You've entered the front desk of the pizzeria.");
+		print("This is also where they would order the pizza for their parties.");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass(track.pizzeriaDoorsName, track.diningAreaName, "null", "null");
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			frontDeskRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			frontDeskRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			frontDeskRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			frontDeskRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			frontDeskRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			frontDeskRoom.useItem(input);
+			cout << endl;
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void FrontDesk::goNorth(string& currentRoom) {
+	currentRoom = "pizzeriaDoors";
+}
+void FrontDesk::goWest(string& currentRoom) {
+	currentRoom = "diningArea";
+}
+void FrontDesk::goSouth(string& currentRoom) {
+	cantGoDirection();
+}
+void FrontDesk::goEast(string& currentRoom) {
+	cantGoDirection();
+}
+void FrontDesk::searchRoom() {
+	system("cls");
+	print("Rummaging through the desk, you can't find anything useful.");
+	printAndWait(6.5, "Just old paperwork, office supplies, and an empty cash register.");
+	system("cls");
+}
+# pragma endregion
 
 void Inventory::collectItem(string newItem) {
 	for (int i = 0; i < 10; i++)
@@ -919,6 +987,27 @@ void Inventory::checkInventory() {
 		else { cout << endl; }
 	}
 	cout << endl;
+}
+void compass(string nameNorth, string nameWest, string nameSouth, string nameEast)
+{
+	// complicated processing to generate the compass ui
+	int compassHoriLength = 10;
+	int WestLength;
+	if (nameWest == "null") { WestLength = 0; }
+	else { WestLength = nameWest.length(); }
+	for (int i = 0; i != WestLength + compassHoriLength - (nameNorth.length() / 2); i++) { cout << " "; }
+	if (nameNorth != "null") { print(nameNorth); }
+	else { cout << endl; }
+	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("/\\");
+	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("||");
+	if (nameWest != "null") { cout << nameWest; }
+	print("< ======= -- ======= >");
+	if (nameEast != "null") { print(nameEast); }
+	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("||");
+	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("\\/");
+	for (int i = 0; i != WestLength + compassHoriLength - (nameSouth.length() / 2); i++) { cout << " "; }
+	if (nameSouth != "null") { print(nameSouth); }
+	else { cout << endl; }
 }
 void HelpCommand() {
 	system("cls");
