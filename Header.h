@@ -163,6 +163,7 @@ struct RoomsVisited {
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();
 
+//yes
 //Frozen stairs, carpet in blood red
 //Seating goodbyes left unsaid, goodbyes left unsaid
 //Despite our promises, here I am following your steps
