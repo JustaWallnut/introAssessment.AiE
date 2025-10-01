@@ -102,6 +102,15 @@ class FrontDesk : public Rooms {
 		void goEast(string& currentRoom) override;
 		void searchRoom() override;
 };
+class DiningArea : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void searchRoom() override;
+};
 
 class Inventory {
 	private:
@@ -123,6 +132,9 @@ struct RoomsVisited {
 	string pizzeriaDoorsName = "???";
 	string frontDeskName = "???";
 	string diningAreaName = "???";
+	string showStageName = "???";
+	string diningTablesName = "???";
+	string bathroomsName = "???";
 };
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();

@@ -13,6 +13,7 @@ int main()
 	CarTrunk carTrunkRoom;
 	PizzeriaDoors pizzeriaDoorsRoom;
 	FrontDesk frontDeskRoom;
+	DiningArea diningArea;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -25,6 +26,7 @@ int main()
 		carTrunkRoom.inRoomLogic(currentRoom);
 		pizzeriaDoorsRoom.inRoomLogic(currentRoom);
 		frontDeskRoom.inRoomLogic(currentRoom);
+		diningArea.inRoomLogic(currentRoom);
 	}
 
 }

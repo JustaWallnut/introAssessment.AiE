@@ -639,8 +639,22 @@ void Entrance::goEast(string& currentRoom) {
 }
 void Entrance::searchRoom() {
 	system("cls");
-	print("In the dark of night, it's hard to find anything out here");
-	printAndWait(6.5, "At the very least, you should try to approach the pizzeria");
+	string nothing;
+	print("The parking lot remains empty, void of cars except for yours.");
+	if (inventory.checkForItem("Flashlight"))
+	{
+
+	}
+	else if(inventory.checkForItem("Flashlight - No Batteries"))
+	{
+
+	}
+	else 
+	{
+		print("In the dark of night, it's hard to find anything out here");
+		print("Maybe if you could see, you might find something out here.");
+	}
+	cin >> nothing;
 	system("cls");
 }
 # pragma endregion
@@ -715,20 +729,22 @@ void CarTrunk::goEast(string& currentRoom) {
 	cantGoDirection();
 }
 void CarTrunk::searchRoom() {
+	string nothing;
 	system("cls");
 	if (inventory.checkForItem("Crowbar") && inventory.checkForItem("Pizzeria Keys"))
 	{
 		print("There's nothing else to find here");
-		printAndWait(4, "Only your lint and an old water bottle");
+		print("Only your lint and an old water bottle");
 	}
 	else
 	{
 		inventory.collectItem("Crowbar");
 		inventory.collectItem("Pizzeria Keys");
 		print("It's a good thing you checked your car!");
-		print("You pick up your crowbar and pizzeria keys from your car");
-		printAndWait(7.5, "Can't explore without these!");
+		print("You pick up your crowbar and keys for the pizzeria");
+		print("These might be useful for later.");
 	}
+	cin >> nothing;
 	system("cls");
 }
 #pragma endregion
@@ -797,6 +813,7 @@ void PizzeriaDoors::goWest(string& currentRoom) {
 	cantGoDirection();
 }
 void PizzeriaDoors::goSouth(string& currentRoom) {
+	string nothing;
 	if (lock.frontDoorUnlocked)
 	{
 		currentRoom = "frontDesk";
@@ -804,37 +821,42 @@ void PizzeriaDoors::goSouth(string& currentRoom) {
 	else
 	{
 		system("cls");
-		printAndWait(4, "You try the front doors, but it seems to be locked.");
+		print("You try the doors, but it's locked.");
+		cin >> nothing;
 	}
 }
 void PizzeriaDoors::goEast(string& currentRoom) {
 	cantGoDirection();
 }
 void PizzeriaDoors::useItem(string item) {
+	string nothing;
 	if (inventory.checkForItem(item, "pizzeria keys")) {
 		lock.frontDoorUnlocked = true;
 		inventory.useItem("pizzeria keys");
-		printAndWait(4, "You turn the keys, unlocking the doors to the pizzeria.");
+		print("You turn the keys, unlocking the doors to the pizzeria.");
 	}
 	else if (inventory.checkForItem(item, "crowbar")) {
-		printAndWait(4, "As much as you'd love to use your crowbar, you'd rather save it for later.");
+		print("As much as you'd love to use your crowbar, you'd rather save it for later.");
 	}
 	else {
-		printAndWait(2.5, "Doesn't seem like you can use these here.");
+		print("Doesn't seem like you can use these here.");
 	}
+	cin >> nothing;
 	system("cls");
 }
 void PizzeriaDoors::searchRoom() {
 	system("cls");
+	string nothing;
 	print("The sign reads: Freddy's Fazbear Pizzeria");
 	if (lock.frontDoorUnlocked)
 	{
-		printAndWait(4.5, "The nasty door stands ajar, a horrifying aura eminating from inside the pizzeria.");
+		print("The nasty door stands ajar, a horrifying aura eminating from inside the pizzeria.");
 	}
 	else
 	{
-		printAndWait(4.5, "The doors stand there, rigid and closed, its glass doors dirtied and scratched.");
+		print("The doors stand there, rigid and closed, its glass doors dirtied and scratched.");
 	}
+	cin >> nothing;
 	system("cls");
 }
 #pragma endregion
@@ -911,9 +933,115 @@ void FrontDesk::goEast(string& currentRoom) {
 	cantGoDirection();
 }
 void FrontDesk::searchRoom() {
+	string nothing;
 	system("cls");
-	print("Rummaging through the desk, you can't find anything useful.");
-	printAndWait(6.5, "Just old paperwork, office supplies, and an empty cash register.");
+	print("Rummaging through the desk, one of the papers catches your eye.");
+	print("Some letters of the menu were scribbled on.");
+	cout << endl;
+	print("=== MENU ===");
+	print("1. $4.99 - Cheese  -izza");
+	print("2. $5.99 - P-pperoni  Pizza");
+	print("3. $5.99 - Sau-age  Pizza");
+	print("4. $8.99 - Supreme Pizz-");
+	cin >> nothing;
+	system("cls");
+}
+# pragma endregion
+
+# pragma region DiningArea
+void DiningArea::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	DiningArea diningAreaRoom;
+	string input;
+	while (currentRoom == "diningArea")
+	{
+		track.diningAreaName = "Dining Area";
+		print("You're at the corner of the major dining room.");
+		print("You have many ways you could go from here.");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass(track.frontDeskName, track.showStageName, track.diningTablesName, track.bathroomsName);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			diningAreaRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			diningAreaRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			diningAreaRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			diningAreaRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			diningAreaRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			diningAreaRoom.useItem(input);
+			cout << endl;
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void DiningArea::goNorth(string& currentRoom) {
+	currentRoom = "frontDesk";
+}
+void DiningArea::goWest(string& currentRoom) {
+	currentRoom = "showStage";
+}
+void DiningArea::goSouth(string& currentRoom) {
+	currentRoom = "diningTables";
+}
+void DiningArea::goEast(string& currentRoom) {
+	currentRoom = "bathrooms";
+}
+void DiningArea::searchRoom() {
+	system("cls");
+	string nothing;
+	if (inventory.checkForItem("Flashlight"))
+	{
+		print("Besides the balloons, confetti, and party hats literring the floor,");
+		print("there's nothing else here to find.");
+	}
+	else
+	{
+		printAndWait(2, "You almost trip on something cylindrical as you search the corner.");
+		if (inventory.checkForItem("Batteries"))
+		{
+			inventory.useItem("Batteries");
+			inventory.useItem("Flashlight - No Batteries");
+			inventory.collectItem("Flashlight");
+			print("Picking it up, it turns out to be a flashlight!");
+			print("You insert the batteries you've found into the empty flashlight.");
+		}
+		inventory.collectItem("Flashlight - No Batteries");
+		print("Picking it up, it turns out to be a flashlight! However, it's missing batteries.");
+	}
+	cin >> nothing;
 	system("cls");
 }
 # pragma endregion
@@ -995,17 +1123,18 @@ void compass(string nameNorth, string nameWest, string nameSouth, string nameEas
 	int WestLength;
 	if (nameWest == "null") { WestLength = 0; }
 	else { WestLength = nameWest.length(); }
-	for (int i = 0; i != WestLength + compassHoriLength - (nameNorth.length() / 2); i++) { cout << " "; }
+	for (int i = 0; i != WestLength + compassHoriLength - (nameNorth.length() / 2) + 1; i++) { cout << " "; }
 	if (nameNorth != "null") { print(nameNorth); }
 	else { cout << endl; }
-	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("/\\");
-	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("||");
+	for (int i = 0; i != WestLength + compassHoriLength + 1; i++) { cout << " "; } print("/\\");
+	for (int i = 0; i != WestLength + compassHoriLength + 1; i++) { cout << " "; } print("||");
 	if (nameWest != "null") { cout << nameWest; }
-	print("< ======= -- ======= >");
+	cout << " < ======= -- ======= > ";
 	if (nameEast != "null") { print(nameEast); }
-	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("||");
-	for (int i = 0; i != WestLength + compassHoriLength; i++) { cout << " "; } print("\\/");
-	for (int i = 0; i != WestLength + compassHoriLength - (nameSouth.length() / 2); i++) { cout << " "; }
+	else { cout << endl; }
+	for (int i = 0; i != WestLength + compassHoriLength + 1; i++) { cout << " "; } print("||");
+	for (int i = 0; i != WestLength + compassHoriLength + 1; i++) { cout << " "; } print("\\/");
+	for (int i = 0; i != WestLength + compassHoriLength - (nameSouth.length() / 2) + 1; i++) { cout << " "; }
 	if (nameSouth != "null") { print(nameSouth); }
 	else { cout << endl; }
 }
