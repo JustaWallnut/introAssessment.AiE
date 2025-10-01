@@ -14,6 +14,7 @@ int main()
 	PizzeriaDoors pizzeriaDoorsRoom;
 	FrontDesk frontDeskRoom;
 	DiningArea diningArea;
+	DiningTables diningTable;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -27,6 +28,7 @@ int main()
 		pizzeriaDoorsRoom.inRoomLogic(currentRoom);
 		frontDeskRoom.inRoomLogic(currentRoom);
 		diningArea.inRoomLogic(currentRoom);
+		diningTable.inRoomLogic(currentRoom);
 	}
 
 }

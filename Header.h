@@ -111,6 +111,24 @@ class DiningArea : public Rooms {
 		void goEast(string& currentRoom) override;
 		void searchRoom() override;
 };
+class DiningTables : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void searchRoom() override;
+};
+class ShowStage : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void searchRoom() override;
+};
 
 class Inventory {
 	private:
@@ -125,6 +143,8 @@ class Inventory {
 struct Locks
 {
 	bool frontDoorUnlocked = false;
+	bool backRoomUnlocked = false;
+	bool controlRoomUnlocked = false;
 };
 struct RoomsVisited {
 	string entranceName = "???";
@@ -135,6 +155,10 @@ struct RoomsVisited {
 	string showStageName = "???";
 	string diningTablesName = "???";
 	string bathroomsName = "???";
+	string arcadeName = "???";
+	string foxysCoveName = "???";
+	string controlRoom = "???";
+	string backRoom = "???";
 };
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();

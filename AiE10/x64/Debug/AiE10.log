@@ -10,5 +10,5 @@ C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4
   
 C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(18,16): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
 C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(540,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(1125,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(1209,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   AiE10.vcxproj -> C:\Users\s258016\Documents\GitHub\introAssessment.AiE\x64\Debug\AiE10.exe
