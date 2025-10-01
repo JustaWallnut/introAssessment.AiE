@@ -25,10 +25,6 @@
           "SelectedChildIndex": 2,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Main2.cpp",
@@ -36,10 +32,14 @@
               "RelativeDocumentMoniker": "Main2.cpp",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Main2.cpp",
               "RelativeToolTip": "Main2.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-23T21:31:48.564Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
@@ -49,7 +49,7 @@
               "RelativeDocumentMoniker": "Functions.cpp",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Functions.cpp",
               "RelativeToolTip": "Functions.cpp",
-              "ViewState": "AgIAALUDAAAAAAAAAAAWwLsEAAArAAAAAAAAAA==",
+              "ViewState": "AgIAADACAAAAAAAAAAAAAC8CAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-22T17:16:29.134Z",
               "EditorCaption": ""
@@ -62,7 +62,7 @@
               "RelativeDocumentMoniker": "Header.h",
               "ToolTip": "C:\\Users\\s258016\\Documents\\GitHub\\introAssessment.AiE\\Header.h",
               "RelativeToolTip": "Header.h",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAJEAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKIAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-09-22T16:48:39.004Z",
               "EditorCaption": ""

@@ -121,13 +121,24 @@ class DiningTables : public Rooms {
 		void searchRoom() override;
 };
 class ShowStage : public Rooms {
-public:
-	void inRoomLogic(string& currentRoom) override;
-	void goNorth(string& currentRoom) override;
-	void goWest(string& currentRoom) override;
-	void goSouth(string& currentRoom) override;
-	void goEast(string& currentRoom) override;
-	void searchRoom() override;
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void useItem(string item) override;
+		void searchRoom() override;
+};
+class FoxysCove : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void useItem(string item) override;
+		void searchRoom() override;
 };
 
 class Inventory {
@@ -144,7 +155,12 @@ struct Locks
 {
 	bool frontDoorUnlocked = false;
 	bool backRoomUnlocked = false;
+	bool FreddyAccessory = false;
+	bool BonnieAccessory = false;
+	bool ChicaAccessory = false;
+	bool FoxyAccessory = false;
 	bool controlRoomUnlocked = false;
+	bool foxysTreasure = false;
 };
 struct RoomsVisited {
 	string entranceName = "???";
@@ -159,73 +175,7 @@ struct RoomsVisited {
 	string foxysCoveName = "???";
 	string controlRoom = "???";
 	string backRoom = "???";
+	string leftHallway = "???";
 };
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();
-
-//yes
-//Frozen stairs, carpet in blood red
-//Seating goodbyes left unsaid, goodbyes left unsaid
-//Despite our promises, here I am following your steps
-//I’m following your steps
-//
-//Drop by drop
-//As your unchanging reality dampen my sleeve
-//You kissed them off
-//Through the fibers of my handkerchief
-//
-//I am fire
-//Burn those who dare to care for me
-//And my fuel are memories, fuel are memories of you
-//They perish with the heat, perish with the heat
-//So I can move on
-//Flower of iron
-//Shrivelled up to hide the imposter in me
-//“Hey, why did you leave ? Why did you leave ? ”
-//Don’t let those words out of me
-//Imposter’s about to speak
-//So I chewed on Huameitang
-//
-//For whom the shelves hold on to the pages, hold on to the pages
-//Their pain, their joy were given value as they were rated
-//Isn’t it ironic ?
-//Greed is unlimited; freedom is a limited resource
-//Extra large for you means less for me
-//There’ll be less for me
-//
-//I banged the drums
-//(Weiwu…)
-//Court of hell
-//(Weiwu…)
-//Demanding a new trial
-//(Weiwu…)
-//You got the wrong head
-//Would you take mine instead, take mine instead ?
-//Stop leading me on
-//
-//World of titan allows me to live
-//Only in the mud down its feet
-//Though you’re not with me, you’re not with me
-//I’ll never admit defeat
-//Cause when I thought that every nice thing about me has become Canxiang
-//You showed me I still had an umbrella full of love inside me
-//Without you I could never be
-//So sincerely thank you for everything
-//It pains me to think
-//That my happiness turned out to be one of those fingers that strangled you until you couldn’t breathe
-//Not ashamed to go this way
-//I just want to choose my fate
-//I’m on my last white rabbit Naitang
-//
-//I am iron
-//In my blood it streams roots deep
-//With bruises on my knees, bruises on my knees
-//And ribs crushed down to pieces, crushed down to pieces
-//Nothing left to hold on
-//Actually wait
-//I do have one regret
-//That day before you left me
-//“You’re my everything”
-//Before my thoughts began to speak
-//I bit my lip, said nothing
-//And just sucked on Maiyatang
