@@ -141,6 +141,26 @@ class FoxysCove : public Rooms {
 		void searchRoom() override;
 };
 class Bathrooms : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void useItem(string item) override;
+		void searchRoom() override;
+};
+class MensBathroom : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void useItem(string item) override;
+		void searchRoom() override;
+};
+class Arcade : public Rooms {
 public:
 	void inRoomLogic(string& currentRoom) override;
 	void goNorth(string& currentRoom) override;
@@ -164,6 +184,7 @@ class Inventory {
 struct Locks
 {
 	bool carItems = true;
+	bool parkingLotItem = true;
 	bool flashlightItem = true;
 	bool frontDoorUnlocked = false;
 	bool backRoomUnlocked = false;
@@ -172,6 +193,7 @@ struct Locks
 	bool ChicaAccessory = false;
 	bool FoxyAccessory = false;
 	bool controlRoomUnlocked = false;
+	bool menStallOpen = false;
 	bool foxysTreasure = false;
 	bool bathroomClean = false;
 };
@@ -189,6 +211,11 @@ struct RoomsVisited {
 	string controlRoom = "???";
 	string backRoom = "???";
 	string leftHallway = "???";
+	string leftDoorway = "???";
+	string rightHallway = "???";
+	string rightDoorway = "???";
+	string kitchen = "???";
+	string janitorCloset = "???";
 	string womensBathroom = "???";
 	string mensBathroom = "???";
 };
