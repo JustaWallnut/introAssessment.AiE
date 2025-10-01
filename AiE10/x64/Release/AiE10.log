@@ -1,0 +1,33 @@
+﻿  Functions.cpp
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Functions.cpp')
+  
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(18,16): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(540,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Functions.cpp(1552,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Main.cpp
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Main.cpp')
+  
+  Main2.cpp
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Main2.cpp(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\s258016\Documents\GitHub\introAssessment.AiE\Header.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Main2.cpp')
+  
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 310 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  AiE10.vcxproj -> C:\Users\s258016\Documents\GitHub\introAssessment.AiE\x64\Release\AiE10.exe

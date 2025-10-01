@@ -17,6 +17,7 @@ int main()
 	DiningTables diningTable;
 	ShowStage showStage;
 	FoxysCove foxysCove;
+	Bathrooms bathroomhall;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -33,6 +34,7 @@ int main()
 		diningTable.inRoomLogic(currentRoom);
 		showStage.inRoomLogic(currentRoom);
 		foxysCove.inRoomLogic(currentRoom);
+		bathroomhall.inRoomLogic(currentRoom);
 	}
 
 }

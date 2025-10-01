@@ -737,7 +737,7 @@ void CarTrunk::goEast(string& currentRoom) {
 void CarTrunk::searchRoom() {
 	string nothing;
 	system("cls");
-	if (inventory.checkForItem("Crowbar") && inventory.checkForItem("Pizzeria Keys"))
+	if (!lock.carItems)
 	{
 		print("There's nothing else to find here");
 		print("Only your lint and an old water bottle");
@@ -746,6 +746,7 @@ void CarTrunk::searchRoom() {
 	{
 		inventory.collectItem("Crowbar");
 		inventory.collectItem("Pizzeria Keys");
+		lock.carItems = false;
 		print("It's a good thing you checked your car!");
 		print("You pick up your crowbar and keys for the pizzeria");
 		print("These might be useful for later.");
@@ -1028,7 +1029,7 @@ void DiningArea::goEast(string& currentRoom) {
 void DiningArea::searchRoom() {
 	system("cls");
 	string nothing;
-	if (inventory.checkForItem("Flashlight"))
+	if (!lock.flashlightItem)
 	{
 		print("Besides the balloons, confetti, and party hats literring the floor,");
 		print("there's nothing else here to find.");
@@ -1044,8 +1045,12 @@ void DiningArea::searchRoom() {
 			print("Picking it up, it turns out to be a flashlight!");
 			print("You insert the batteries you've found into the empty flashlight.");
 		}
-		inventory.collectItem("Flashlight - No Batteries");
-		print("Picking it up, it turns out to be a flashlight! However, it's missing batteries.");
+		else
+		{
+			inventory.collectItem("Flashlight - No Batteries");
+			print("Picking it up, it turns out to be a flashlight! However, it's missing batteries.");
+		}
+		lock.flashlightItem = false;
 	}
 	getline(cin, nothing);
 	system("cls");
@@ -1064,7 +1069,7 @@ void DiningTables::inRoomLogic(string& currentRoom) {
 		print("Empty pizza boxes, more confetti, party hats, and paper plates.");
 		print("Type help to see all valid commands");
 		cout << endl;
-		compass(track.diningAreaName, track.foxysCoveName, track.arcadeName, track.bathroomsName);
+		compass(track.diningAreaName, track.foxysCoveName, track.arcadeName, "null");
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
@@ -1121,7 +1126,7 @@ void DiningTables::goSouth(string& currentRoom) {
 	currentRoom = "arcade";
 }
 void DiningTables::goEast(string& currentRoom) {
-	currentRoom = "bathrooms";
+	cantGoDirection();
 }
 void DiningTables::searchRoom() {
 	system("cls");
@@ -1280,7 +1285,7 @@ void ShowStage::searchRoom() {
 # pragma region FoxysCove
 void FoxysCove::inRoomLogic(string& currentRoom) {
 	stringUtil stringFunc;
-	FoxysCove showStageRoom;
+	FoxysCove foxysCove;
 	string input;
 	while (currentRoom == "foxysCove")
 	{
@@ -1298,23 +1303,23 @@ void FoxysCove::inRoomLogic(string& currentRoom) {
 			continue;
 		}
 		else if (stringFunc.boolFind(input, "search")) {
-			showStageRoom.searchRoom();
+			foxysCove.searchRoom();
 			continue;
 		}
 		else if (stringFunc.boolFind(input, "north")) {
-			showStageRoom.goNorth(currentRoom);
+			foxysCove.goNorth(currentRoom);
 			break;
 		}
 		else if (stringFunc.boolFind(input, "west")) {
-			showStageRoom.goWest(currentRoom);
+			foxysCove.goWest(currentRoom);
 			continue;
 		}
 		else if (stringFunc.boolFind(input, "south")) {
-			showStageRoom.goSouth(currentRoom);
+			foxysCove.goSouth(currentRoom);
 			break;
 		}
 		else if (stringFunc.boolFind(input, "east")) {
-			showStageRoom.goEast(currentRoom);
+			foxysCove.goEast(currentRoom);
 			continue;
 		}
 		else if (stringFunc.boolFind(input, "use")) {
@@ -1322,7 +1327,7 @@ void FoxysCove::inRoomLogic(string& currentRoom) {
 			string itemString;
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
-			showStageRoom.useItem(input);
+			foxysCove.useItem(input);
 			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
@@ -1357,6 +1362,117 @@ void FoxysCove::searchRoom() {
 	print("The number 2 was graffitied onto Foxy's back.");
 	print("You can also see a locked box tucked in the back of the cove.");
 	print("It'll probably require a special key for me to open it.");
+	getline(cin, nothing);
+	system("cls");
+}
+#pragma endregion
+
+# pragma region Bathrooms
+void Bathrooms::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	Bathrooms bathRoom;
+	string input;
+	while (currentRoom == "bathrooms")
+	{
+		track.bathroomsName = "Bathroom Hall";
+		print("The stagnant and absolutely pungant bathroom hall awaits.");
+		cout << endl;
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", track.diningAreaName, track.womensBathroom, track.mensBathroom);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			bathRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			bathRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			bathRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			bathRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			bathRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			bathRoom.useItem(input);
+			cout << endl;
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void Bathrooms::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void Bathrooms::goWest(string& currentRoom) {
+	currentRoom = "diningArea";
+}
+void Bathrooms::goSouth(string& currentRoom) {
+	string nothing;
+	print("The women's restrooms were buried in rubble.");
+	print("You can't find any way across the rubble from here.");
+	getline(cin, nothing);
+}
+void Bathrooms::goEast(string& currentRoom) {
+	currentRoom = "mensBathroom";
+}
+void Bathrooms::useItem(string item) {
+	string nothing;
+	if (item == "Handkerchief" || item == "Cleaning Solution")
+	{
+		if (inventory.checkForItem("Handkerchief") && inventory.checkForItem("Cleaning Solution"))
+		{
+			inventory.useItem("Handkerchief");
+			inventory.useItem("Cleaning Solution");
+			lock.bathroomClean = true;
+			print("You manage to clean the sludge on the walls");
+			print("It reveals a message:");
+			print("I ALWAYS COME BACK");
+		}
+	}
+	else
+	{
+		print("Hm, didn't seem to work.");
+	}
+	getline(cin, nothing);
+}
+void Bathrooms::searchRoom() {
+	system("cls");
+	string nothing;
+	if (lock.bathroomClean)
+	{
+		print("Besides the rubble of the womens bathroom, the halls are pretty clean.");
+	}
+	else
+	{
+		print("You notice a spot with unknown sludge on the walls");
+		print("You suspect that it's covering something important.");
+	}
 	getline(cin, nothing);
 	system("cls");
 }

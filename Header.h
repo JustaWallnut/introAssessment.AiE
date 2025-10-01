@@ -140,6 +140,16 @@ class FoxysCove : public Rooms {
 		void useItem(string item) override;
 		void searchRoom() override;
 };
+class Bathrooms : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
 
 class Inventory {
 	private:
@@ -153,6 +163,8 @@ class Inventory {
 };
 struct Locks
 {
+	bool carItems = true;
+	bool flashlightItem = true;
 	bool frontDoorUnlocked = false;
 	bool backRoomUnlocked = false;
 	bool FreddyAccessory = false;
@@ -161,6 +173,7 @@ struct Locks
 	bool FoxyAccessory = false;
 	bool controlRoomUnlocked = false;
 	bool foxysTreasure = false;
+	bool bathroomClean = false;
 };
 struct RoomsVisited {
 	string entranceName = "???";
@@ -176,6 +189,8 @@ struct RoomsVisited {
 	string controlRoom = "???";
 	string backRoom = "???";
 	string leftHallway = "???";
+	string womensBathroom = "???";
+	string mensBathroom = "???";
 };
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();
