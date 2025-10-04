@@ -588,6 +588,7 @@ void Entrance::inRoomLogic(string &currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -689,6 +690,7 @@ void CarTrunk::inRoomLogic(string &currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -780,6 +782,7 @@ void PizzeriaDoors::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -892,6 +895,7 @@ void FrontDesk::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -979,6 +983,7 @@ void DiningArea::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1081,6 +1086,7 @@ void DiningTables::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1170,6 +1176,7 @@ void ShowStage::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1306,6 +1313,7 @@ void FoxysCove::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1362,7 +1370,12 @@ void FoxysCove::goEast(string& currentRoom) {
 	currentRoom = "diningTables";
 }
 void FoxysCove::useItem(string item) {
-	
+	if (inventory.checkForItem(item, "foxys hook"))
+	{
+		inventory.useItem("foxys hook");
+		lock.FoxyAccessory = true;
+		print("You return the hook to Foxy's hand.");
+	}
 }
 void FoxysCove::searchRoom() {
 	system("cls");
@@ -1391,6 +1404,7 @@ void Bathrooms::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1502,6 +1516,7 @@ void MensBathroom::inRoomLogic(string& currentRoom) {
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1532,7 +1547,6 @@ void MensBathroom::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			mensBathroom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1603,14 +1617,15 @@ void Arcade::inRoomLogic(string& currentRoom) {
 	while (currentRoom == "arcade")
 	{
 		track.arcadeName = "The Arcade";
-		print("The men's restrooms; stalls and urinals line one wall, and sinks line the other.");
-		print("For a public restroom, it's cleaner than you'd think.");
+		print("Arcade machines line the walls adjacent to the security hallways.");
+		print("One of the machines seem to be turned on, strangely enough.");
 		print("Type help to see all valid commands");
 		cout << endl;
-		compass("null", track.bathroomsName, "null", "null");
+		compass(track.diningTablesName, track.leftHallway, "null", track.rightHallway);
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
+		system("cls");
 		if (stringFunc.boolFind(input, "help")) {
 			HelpCommand();
 			continue;
@@ -1649,35 +1664,68 @@ void Arcade::inRoomLogic(string& currentRoom) {
 		}
 		else
 		{
+			if (lock.coinInserted && !lock.consoleUnlocked)
+			{
+				string nothing;
+				if (digitCheck(input) && input.length() > 4)
+				{
+					print("The passcode you tried typing was too long.");
+				}
+				else if (digitCheck(input) && input.length() < 4)
+				{
+					print("The passcode you tried typing was too short.");
+				}
+				else if (digitCheck(input) && input.length() == 4)
+				{
+					if (input == lock.arcadePassword)
+					{
+						lock.consoleUnlocked = true;
+						inventory.collectItem("Foxys Hook");
+						print("You hear rattling noises from the arcade machine's compartment.");
+						print("You open it, revealing a pirate's hook from within.");
+						print("Maybe this belonged to somebody?");
+					}
+				}
+				getline(cin, nothing);
+			}
 			system("cls");
 		}
 	}
 	system("cls");
 }
 void Arcade::goNorth(string& currentRoom) {
-	cantGoDirection();
+	currentRoom = "diningTables";
 }
 void Arcade::goWest(string& currentRoom) {
-	currentRoom = "bathrooms";
+	currentRoom = "leftHallway";
 }
 void Arcade::goSouth(string& currentRoom) {
 	cantGoDirection();
 }
 void Arcade::goEast(string& currentRoom) {
-	cantGoDirection();
+	currentRoom = "rightHallway";
 }
 void Arcade::useItem(string item) {
 	string nothing;
-	if (inventory.checkForItem(item, "crowbar") && !lock.menStallOpen)
+	if (lock.consoleUnlocked)
 	{
-		inventory.collectItem("Bonnies Guitar");
-		lock.menStallOpen = true;
-		print("You pry open one of the stall doors and find an electric guitar");
-		print("Maybe this belongs to someone?");
+		print("There's nothing left to do here.");
 	}
-	else if (inventory.checkForItem(item, "crowbar"))
+	else if (!lock.coinInserted)
 	{
-		print("No other stall doors had anything or needed to be pried open.");
+		if (inventory.checkForItem("coin"))
+		{
+			lock.coinInserted = true;
+			print("You insert the coin into the machine.");
+			print("The arcade lights up, but is abruptly interrupted a black screen.");
+			print("It seems like someone left the machine in admin mode and stuck in the console.");
+			print("The console line reads: Insert the 4 secret numbers. Ignore the golden plush.");
+			print("You'll most likely have to enter those numbers using the numberpad at the bottom of the machine.");
+		}
+		else
+		{
+			print("Nothing happens.");
+		}
 	}
 	else
 	{
@@ -1689,20 +1737,148 @@ void Arcade::useItem(string item) {
 void Arcade::searchRoom() {
 	system("cls");
 	string nothing;
-	if (lock.menStallOpen)
+	if (lock.consoleUnlocked)
 	{
-		print("A beautiful row of stalls minus the broken door you pried open.");
-		print("Otherwise, there's nothing else to see in this room.");
+		print("With the code correctly entered, the machine turns off, joining the other machines.");
+		print("You can't find anything else in the machine's compartment.");
+	}
+	else if (lock.coinInserted)
+	{
+		print("The console line reads: Insert the 4 secret numbers. Ignore the golden plush.");
+		print("The console blinker awaits your input of a 4 number code.");
 	}
 	else
 	{
-		print("Going through each stall, one of them seemed to have something inside.");
-		print("Unfortunately, it also happened to be the stall that's stuck.");
+		print("The machine displays it's Title Screen, prompting to Insert a Coin.");
+		print("Maybe inserting one will do something?");
 	}
 	getline(cin, nothing);
 	system("cls");
 }
+bool Arcade::digitCheck(string input)
+{
+	for (char i : input)
+	{
+		if (!isdigit(i))
+		{
+			return false;
+		}
+	}
+	return true;
+}
 #pragma endregion
+
+# pragma region LeftHallway
+void LeftHallway::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	LeftHallway leftHallwayRoom;
+	string input;
+	while (currentRoom == "leftHallway")
+	{
+		track.leftHallway = "Left Hallway";
+		print("The left hallway of the security office.");
+		print("You see cameras down the hallway, probably for the creepy robots on stage.");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass(track.foxysCoveName, track.janitorCloset, track.leftDoorway, track.arcadeName);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			leftHallwayRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			leftHallwayRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			leftHallwayRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			leftHallwayRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			leftHallwayRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			leftHallwayRoom.useItem(input);
+			system("cls");
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else if (input.length() == 4)
+		{
+			string nothing;
+			if (input == lock.janitorPassword)
+			{
+				lock.janitorsOpen = true;
+				print("The lock clicks, and unlocks the room.");
+			}
+			else
+			{
+				print("Nothing happens.");
+			}
+			getline(cin, nothing);
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+}
+void LeftHallway::goNorth(string& currentRoom) {
+	currentRoom = "foxysCove";
+}
+void LeftHallway::goWest(string& currentRoom) {
+	if (lock.janitorsOpen)
+	{
+		currentRoom = "janitorCloset";
+	}
+	else
+	{
+		string nothing;
+		print("You try the door, but it's locked, and it doesn't seem to accept a key either.");
+		getline(cin, nothing);
+	}
+	system("cls");
+}
+void LeftHallway::goSouth(string& currentRoom) {
+	currentRoom = "leftDoorway";
+}
+void LeftHallway::goEast(string& currentRoom) {
+	currentRoom = "arcade";
+}
+void LeftHallway::searchRoom() {
+	system("cls");
+	string nothing;
+	if (lock.janitorsOpen)
+	{
+		print("You don't see anything notable in this spot of the hallway.");
+	}
+	else
+	{
+		print("You notice the Janitor's door is locked with a padlock.");
+		print("Seems like it accepts a 4 letter password.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+# pragma endregion
 
 void Inventory::collectItem(string newItem) {
 	for (int i = 0; i < 10; i++)

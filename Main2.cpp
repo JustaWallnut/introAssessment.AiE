@@ -19,6 +19,8 @@ int main()
 	FoxysCove foxysCove;
 	Bathrooms bathroomHall;
 	MensBathroom mensRestroom;
+	Arcade arcadeRoom;
+	LeftHallway lefthall;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -37,6 +39,8 @@ int main()
 		foxysCove.inRoomLogic(currentRoom);
 		bathroomHall.inRoomLogic(currentRoom);
 		mensRestroom.inRoomLogic(currentRoom);
+		arcadeRoom.inRoomLogic(currentRoom);
+		lefthall.inRoomLogic(currentRoom);
 	}
 
 }

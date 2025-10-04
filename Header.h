@@ -169,7 +169,18 @@ public:
 	void goEast(string& currentRoom) override;
 	void useItem(string item) override;
 	void searchRoom() override;
+	bool digitCheck(string input);
 };
+class LeftHallway : public Rooms {
+	public:
+		void inRoomLogic(string& currentRoom) override;
+		void goNorth(string& currentRoom) override;
+		void goWest(string& currentRoom) override;
+		void goSouth(string& currentRoom) override;
+		void goEast(string& currentRoom) override;
+		void searchRoom() override;
+};
+
 
 class Inventory {
 	private:
@@ -183,19 +194,24 @@ class Inventory {
 };
 struct Locks
 {
+	string arcadePassword = "1234";
+	string janitorPassword = "pesa";
 	bool carItems = true;
 	bool parkingLotItem = true;
-	bool flashlightItem = true;
 	bool frontDoorUnlocked = false;
+	bool flashlightItem = true;
 	bool backRoomUnlocked = false;
 	bool FreddyAccessory = false;
 	bool BonnieAccessory = false;
 	bool ChicaAccessory = false;
 	bool FoxyAccessory = false;
+	bool foxysTreasure = false;
 	bool controlRoomUnlocked = false;
 	bool menStallOpen = false;
-	bool foxysTreasure = false;
 	bool bathroomClean = false;
+	bool coinInserted = false;
+	bool consoleUnlocked = false;
+	bool janitorsOpen = false;
 };
 struct RoomsVisited {
 	string entranceName = "???";
