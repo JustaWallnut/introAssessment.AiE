@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>;
+#include <string>;
 
 
 using namespace std;
@@ -169,6 +170,16 @@ class MensBathroom : public Rooms {
 		void useItem(string item) override;
 		void searchRoom() override;
 };
+class WomensBathroom : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
 class Arcade : public Rooms {
 public:
 	void inRoomLogic(string& currentRoom) override;
@@ -209,6 +220,16 @@ public:
 	void useItem(string item) override;
 	void searchRoom() override;
 };
+class RightDoorway : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
 class Kitchen : public Rooms {
 public:
 	void inRoomLogic(string& currentRoom) override;
@@ -232,7 +253,7 @@ public:
 
 class Inventory {
 	private:
-		string Items[10];
+		string Items[15];
 	public:
 		void collectItem(string newItem);
 		void useItem(string Item);

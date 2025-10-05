@@ -20,10 +20,12 @@ int main()
 	FoxysCove foxysCove;
 	Bathrooms bathroomHall;
 	MensBathroom mensRestroom;
+	WomensBathroom womensRestroom;
 	Arcade arcadeRoom;
 	LeftHallway lefthall;
 	LeftDoorway leftdoor;
 	RightHallway righthall;
+	RightDoorway rightdoor;
 	Kitchen kitchenRoom;
 	JanitorsCloset janitorsCloset;
 	string currentRoom = "entranceRoom";
@@ -45,10 +47,12 @@ int main()
 		foxysCove.inRoomLogic(currentRoom);
 		bathroomHall.inRoomLogic(currentRoom);
 		mensRestroom.inRoomLogic(currentRoom);
+		womensRestroom.inRoomLogic(currentRoom);
 		arcadeRoom.inRoomLogic(currentRoom);
 		lefthall.inRoomLogic(currentRoom);
 		leftdoor.inRoomLogic(currentRoom);
 		righthall.inRoomLogic(currentRoom);
+		rightdoor.inRoomLogic(currentRoom);
 		kitchenRoom.inRoomLogic(currentRoom);
 		janitorsCloset.inRoomLogic(currentRoom);
 
