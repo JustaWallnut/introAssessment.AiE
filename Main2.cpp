@@ -16,11 +16,13 @@ int main()
 	DiningArea diningArea;
 	DiningTables diningTable;
 	ShowStage showStage;
+	BackRoom backroomArea;
 	FoxysCove foxysCove;
 	Bathrooms bathroomHall;
 	MensBathroom mensRestroom;
 	Arcade arcadeRoom;
 	LeftHallway lefthall;
+	LeftDoorway leftdoor;
 	JanitorsCloset janitorsCloset;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
@@ -37,11 +39,13 @@ int main()
 		diningArea.inRoomLogic(currentRoom);
 		diningTable.inRoomLogic(currentRoom);
 		showStage.inRoomLogic(currentRoom);
+		backroomArea.inRoomLogic(currentRoom);
 		foxysCove.inRoomLogic(currentRoom);
 		bathroomHall.inRoomLogic(currentRoom);
 		mensRestroom.inRoomLogic(currentRoom);
 		arcadeRoom.inRoomLogic(currentRoom);
 		lefthall.inRoomLogic(currentRoom);
+		leftdoor.inRoomLogic(currentRoom);
 		janitorsCloset.inRoomLogic(currentRoom);
 
 	}

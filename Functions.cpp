@@ -619,7 +619,6 @@ void Entrance::inRoomLogic(string &currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			entranceRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -936,7 +935,6 @@ void FrontDesk::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			frontDeskRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1024,7 +1022,6 @@ void DiningArea::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			diningAreaRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1066,7 +1063,7 @@ void DiningArea::searchRoom() {
 			inventory.useItem("flashlight - no batteries");
 			inventory.collectItem("Flashlight");
 			print("Picking it up, it turns out to be a flashlight!");
-			print("You insert the batteries you've found into the empty flashlight.");
+			print("You insert the batteries into the empty flashlight you've found .");
 			print("Flashlight - No Batteries  ----->  Flashlight");
 		}
 		else
@@ -1129,7 +1126,6 @@ void DiningTables::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			diningTableRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1219,7 +1215,6 @@ void ShowStage::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			showStageRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1256,7 +1251,7 @@ void ShowStage::goWest(string& currentRoom) {
 	{
 		string nothing;
 		print("You try the door, but it's locked.");
-		track.backRoom = "[*] Backroom";
+		track.backRoom = "[*] Backroom Area";
 		getline(cin, nothing);
 		system("cls");
 	}
@@ -1290,17 +1285,24 @@ void ShowStage::useItem(string item) {
 		print("You return the cupcake to Chica's plate.");
 		print("[-] Chica's Cupcake");
 	}
+	else if (inventory.checkForItem(item, "backroom keys") && !lock.backRoomUnlocked) {
+		lock.backRoomUnlocked = true;
+		inventory.useItem("backroom keys");
+		print("You turn the keys, unlocking the doors to the backroom area.");
+		print("[-] Backroom Keys");
+		track.backRoom = "Backroom Area";
+	}
 	else
 	{
-		string nothing;
 		print("Hm, didn't seem to work.");
-		getline(cin, nothing);
 	}
 	if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory && lock.FoxyAccessory)
 	{
 		lock.controlRoomUnlocked = true;
 		print("You hear a click coming from the Control Room up north.");
 	}
+	getline(cin, nothing);
+	system("cls");
 }
 void ShowStage::searchRoom() {
 	system("cls");
@@ -1313,6 +1315,116 @@ void ShowStage::searchRoom() {
 	system("cls");
 }
 #pragma endregion
+
+# pragma region BackRoom
+void BackRoom::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	BackRoom backRoom;
+	string input;
+	while (currentRoom == "backRoom")
+	{
+		track.backRoom = "Backroom Area";
+		print("A restricted area where animatronic parts are stored.");
+		print("It's...pretty creepy in here, not gonna lie.");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", "null", "null", track.showStageName);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			backRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			backRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			backRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			backRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			backRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			backRoom.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void BackRoom::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void BackRoom::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void BackRoom::goSouth(string& currentRoom) {
+	cantGoDirection();
+}
+void BackRoom::goEast(string& currentRoom) {
+	currentRoom = "showStage";
+}
+void BackRoom::searchRoom() {
+	system("cls");
+	string nothing;
+	print("The animatronic heads seem to stare at you...ITS CREEPY!");
+	print("But also, they're strangely arranged, as if it was intentional...");
+	print("The heads are arranged like so:");
+	print("Foxy, Freddy, Chica, Bonnie");
+	print("You wonder if that means anything.");
+	cout << endl;
+	if (!lock.backRoomsBatteries)
+	{
+		print("You don't want to stay in this room any longer.");
+		print("Gives you the chills.");
+	}
+	else
+	{
+		print("Lucky you! You find some batteries on one of the tables!");
+		if (inventory.checkForItem("flashlight - no batteries"))
+		{
+			inventory.useItem("batteries");
+			inventory.useItem("flashlight - no batteries");
+			inventory.collectItem("Flashlight");
+			print("You insert the batteries you've found into the empty flashlight.");
+			print("[-] Batteries");
+			print("Flashlight - No Batteries  ----->  Flashlight");
+		}
+		else
+		{
+			inventory.collectItem("Batteries");
+			print("Now if you had something to put it in...");
+			print("[+] Batteries");
+		}
+		lock.flashlightItem = false;
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+# pragma endregion
 
 # pragma region FoxysCove
 void FoxysCove::inRoomLogic(string& currentRoom) {
@@ -1361,7 +1473,6 @@ void FoxysCove::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			foxysCove.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1463,7 +1574,6 @@ void Bathrooms::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			bathRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1494,7 +1604,7 @@ void Bathrooms::goEast(string& currentRoom) {
 }
 void Bathrooms::useItem(string item) {
 	string nothing;
-	if (item == "Handkerchief" || item == "Cleaning Solution")
+	if (inventory.checkForItem(item, "handkerchief") || inventory.checkForItem(item, "cleaning solution"))
 	{
 		if (inventory.checkForItem("handkerchief") && inventory.checkForItem("cleaning solution"))
 		{
@@ -1506,6 +1616,20 @@ void Bathrooms::useItem(string item) {
 			print("I ALWAYS COME BACK");
 			print("You wonder if it's for anything?");
 		}
+		else if (inventory.checkForItem("cleaning solution"))
+		{
+			print("You have the spray ready, but you don't have anything to wipe off the sludge.");
+		}
+		else if (inventory.checkForItem("handkerchief"))
+		{
+			print("You can't wipe it away with your handkerchief alone!");
+		}
+	}
+	else if (inventory.checkForItem("sledgehammer"))
+	{
+		print("The sledgehammer won't break these rocks.");
+		print("You don't want to collapse the whole building trying either.");
+		print("It'd be best to go around this one.");
 	}
 	else
 	{
@@ -1689,7 +1813,6 @@ void Arcade::inRoomLogic(string& currentRoom) {
 			stringUtil stringFunc;
 			input = stringFunc.replace(input, "use", " ");
 			arcadeRoom.useItem(input);
-			cout << endl;
 		}
 		else if (stringFunc.boolFind(input, "inventory")) {
 			inventory.checkInventory();
@@ -1759,7 +1882,7 @@ void Arcade::useItem(string item) {
 			print("Can't use that here.");
 		}
 	}
-	else if (inventory.checkForItem(item, "coin"))
+	else if (inventory.checkForItem(item, "fazcoin"))
 	{
 		lock.coinInserted = true;
 		print("You insert the coin into the machine.");
@@ -1926,6 +2049,135 @@ void LeftHallway::searchRoom() {
 	system("cls");
 }
 # pragma endregion
+
+#pragma region LeftDoorway
+void LeftDoorway::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	LeftDoorway leftDoorway;
+	string input;
+	while (currentRoom == "leftDoorway")
+	{
+		track.leftDoorway = "Left Doorway";
+		print("You stand at the end of the hallway, near the security office doors.");
+		cout << endl;
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass(track.leftHallway, "null", "null", track.securityOffice);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			leftDoorway.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			leftDoorway.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			leftDoorway.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			leftDoorway.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			leftDoorway.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			leftDoorway.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void LeftDoorway::goNorth(string& currentRoom) {
+	currentRoom = "leftHallway";
+}
+void LeftDoorway::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void LeftDoorway::goSouth(string& currentRoom) {
+	cantGoDirection();
+}
+void LeftDoorway::goEast(string& currentRoom) {
+	string nothing;
+	if (lock.powerOff)
+	{
+		currentRoom = "securityOffice";
+	}
+	else
+	{
+		print("You are blocked by heavy magnetic metal doors.");
+		track.securityOffice = "[*] Security Office";
+		getline(cin, nothing);
+	}
+	system("cls");
+}
+void LeftDoorway::useItem(string item) {
+	string nothing;
+	if (inventory.checkForItem(item, "crowbar") && !lock.powerOff && lock.officeCoin)
+	{
+		lock.officeCoin = false;
+		inventory.collectItem("FazCoin");
+		print("You manage to pry the doors ajar and make a tiny gap.");
+		print("A gap just barely big enough to fit your arm through.");
+		print("No matter how strongly you try, the door's magnetics don't allow you to open it any further.");
+		print("You jam a random item from nearby and reach your arm through the gap");
+		cout << endl;
+		print("Swinging your arm aimlessly, all you manage to find in reach is a FazCoin.");
+		if (lock.officeHammer)
+		{
+			print("You might be able to find something else if you did the same on the other side.");
+		}
+		print("[+] FazCoin");
+	}
+	else if (inventory.checkForItem(item, "crowbar"))
+	{
+		print("There's nothing to pry; the doors already open.");
+	}
+	else
+	{
+		print("Didn't work.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+void LeftDoorway::searchRoom() {
+	system("cls");
+	string nothing;
+	if (lock.powerOff)
+	{
+		print("As you suspected, the magnetic doors are released and travel back upwards without power.");
+		print("You're free to walk into the office.");
+	}
+	else
+	{
+		print("As far as you're concerned, there's no way to get past the heavy magnetic doors by force.");
+		print("You might be able to keep it ajar at best, but nowhere in the capacity to be able to enter the office.");
+		print("You suspect the doors might be powered by the building's electricity.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+#pragma endregion
 
 # pragma region JanitorsCloset
 void JanitorsCloset::inRoomLogic(string& currentRoom) {

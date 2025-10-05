@@ -130,6 +130,15 @@ class ShowStage : public Rooms {
 		void useItem(string item) override;
 		void searchRoom() override;
 };
+class BackRoom : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void searchRoom() override;
+};
 class FoxysCove : public Rooms {
 	public:
 		void inRoomLogic(string& currentRoom) override;
@@ -180,6 +189,16 @@ class LeftHallway : public Rooms {
 		void goEast(string& currentRoom) override;
 		void searchRoom() override;
 };
+class LeftDoorway : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
 class JanitorsCloset : public Rooms {
 public:
 	void inRoomLogic(string& currentRoom) override;
@@ -226,6 +245,13 @@ struct Locks
 	bool janitorsOpen = false;
 	bool janitorsItem = true;
 	bool janitorsBroken = false;
+	bool kitchenUnlocked = false;
+	bool ventOpen = false;
+	bool womenBathroomItem = true;
+	bool officeCoin = true;
+	bool officeHammer = true;
+	bool backRoomsBatteries = true;
+	bool powerOff = false;
 };
 struct RoomsVisited {
 	string entranceName = "???";
@@ -248,6 +274,7 @@ struct RoomsVisited {
 	string janitorCloset = "???";
 	string womensBathroom = "???";
 	string mensBathroom = "???";
+	string securityOffice = "???";
 };
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);
 void HelpCommand();
