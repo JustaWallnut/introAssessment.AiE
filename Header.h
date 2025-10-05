@@ -199,6 +199,26 @@ public:
 	void useItem(string item) override;
 	void searchRoom() override;
 };
+class RightHallway : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
+class Kitchen : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
 class JanitorsCloset : public Rooms {
 public:
 	void inRoomLogic(string& currentRoom) override;
@@ -230,26 +250,35 @@ struct Locks
 	bool parkingLotItem = true;
 	bool frontDoorUnlocked = false;
 	bool flashlightItem = true;
-	bool backRoomUnlocked = false;
+
 	bool FreddyAccessory = false;
 	bool BonnieAccessory = false;
 	bool ChicaAccessory = false;
 	bool FoxyAccessory = false;
 	bool foxysTreasure = false;
+
 	bool controlRoomUnlocked = false;
 	bool menStallOpen = false;
 	bool bathroomClean = false;
+
 	bool coinInserted = false;
 	bool arcadeAdminAccess = false;
 	bool consoleUnlocked = false;
+
 	bool janitorsOpen = false;
 	bool janitorsItem = true;
 	bool janitorsBroken = false;
+
 	bool kitchenUnlocked = false;
+	bool kitchenItem = true;
+
 	bool ventOpen = false;
 	bool womenBathroomItem = true;
+
 	bool officeCoin = true;
 	bool officeHammer = true;
+
+	bool backRoomUnlocked = false;
 	bool backRoomsBatteries = true;
 	bool powerOff = false;
 };
@@ -258,22 +287,30 @@ struct RoomsVisited {
 	string carTrunkName = "???";
 	string pizzeriaDoorsName = "???";
 	string frontDeskName = "???";
+
 	string diningAreaName = "???";
 	string showStageName = "???";
 	string diningTablesName = "???";
 	string bathroomsName = "???";
-	string arcadeName = "???";
-	string foxysCoveName = "???";
-	string controlRoom = "???";
-	string backRoom = "???";
-	string leftHallway = "???";
-	string leftDoorway = "???";
-	string rightHallway = "???";
-	string rightDoorway = "???";
-	string kitchen = "???";
-	string janitorCloset = "???";
 	string womensBathroom = "???";
 	string mensBathroom = "???";
+
+	string arcadeName = "???";
+	string foxysCoveName = "???";
+
+	string controlRoom = "???";
+	string backRoom = "???";
+
+	string leftHallway = "???";
+	string leftDoorway = "???";
+
+	string rightHallway = "???";
+	string rightDoorway = "???";
+
+	string kitchen = "???";
+	string kitchenVents = "???";
+
+	string janitorCloset = "???";
 	string securityOffice = "???";
 };
 void compass(string nameNorth, string nameWest, string nameSouth, string nameEast);

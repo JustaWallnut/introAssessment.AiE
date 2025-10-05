@@ -1296,7 +1296,7 @@ void ShowStage::useItem(string item) {
 	{
 		print("Hm, didn't seem to work.");
 	}
-	if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory && lock.FoxyAccessory)
+	if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory && lock.FoxyAccessory && !lock.controlRoomUnlocked)
 	{
 		lock.controlRoomUnlocked = true;
 		print("You hear a click coming from the Control Room up north.");
@@ -1434,7 +1434,14 @@ void FoxysCove::inRoomLogic(string& currentRoom) {
 	while (currentRoom == "foxysCove")
 	{
 		track.foxysCoveName = "Foxy's Cove";
-		print("The tall fox animatronic stands on its booth, his hook missing from arms.");
+		if (lock.FoxyAccessory)
+		{
+			print("Even with the hook returned, it didn't really move. It was out of order, remember?");
+		}
+		else
+		{
+			print("The tall fox animatronic stands on its booth, his hook missing from arms.");
+		}
 		print("As far as you could remember, he was always out of order.");
 		print("Type help to see all valid commands");
 		cout << endl;
@@ -1514,6 +1521,11 @@ void FoxysCove::useItem(string item) {
 		print("I wonder what this is for?");
 		print("[-] Treasure Keys");
 		print("[+] Admin Chip");
+	}
+	if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory && lock.FoxyAccessory && !lock.controlRoomUnlocked)
+	{
+		lock.controlRoomUnlocked = true;
+		print("You hear a click coming from the Control Room up north.");
 	}
 }
 void FoxysCove::searchRoom() {
@@ -2179,6 +2191,138 @@ void LeftDoorway::searchRoom() {
 }
 #pragma endregion
 
+# pragma region RightHallway
+void RightHallway::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	RightHallway rightHallwayRoom;
+	string input;
+	while (currentRoom == "rightHallway")
+	{
+		track.rightHallway = "Right Hallway";
+		print("The right hallway of the security office.");
+		print("Brand and children posters litter the hallway.");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", track.arcadeName, track.rightDoorway, track.kitchen);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			rightHallwayRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			rightHallwayRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			rightHallwayRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			rightHallwayRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			rightHallwayRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			rightHallwayRoom.useItem(input);
+			system("cls");
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else if (input.length() == 4)
+		{
+			string nothing;
+			if (input == lock.janitorPassword)
+			{
+				lock.janitorsOpen = true;
+				print("The lock clicks, and unlocks the room.");
+				track.janitorCloset = "Janitor's Closet";
+			}
+			else
+			{
+				print("Nothing happens.");
+			}
+			getline(cin, nothing);
+			system("cls");
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+}
+void RightHallway::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void RightHallway::goWest(string& currentRoom) {
+	currentRoom = "arcade";
+}
+void RightHallway::goSouth(string& currentRoom) {
+	currentRoom = "rightDoorway";
+}
+void RightHallway::goEast(string& currentRoom) {
+	if (lock.kitchenUnlocked)
+	{
+		currentRoom = "kitchen";
+	}
+	else
+	{
+		string nothing;
+		print("You try the door, but it's locked.");
+		track.kitchen = "[*] Kitchen";
+		getline(cin, nothing);
+		system("cls");
+	}
+}
+void RightHallway::useItem(string item) {
+	string nothing;
+	if (inventory.checkForItem(item, "kitchen keys") && !lock.kitchenUnlocked) {
+		lock.kitchenUnlocked = true;
+		inventory.useItem("kitchen keys");
+		print("You turn the keys, unlocking the kitchen double doors.");
+		print("[-] Kitchen Keys");
+		track.kitchen = "Kitchen";
+	}
+	else if (inventory.checkForItem(item, "crowbar") && !lock.kitchenUnlocked) {
+		print("I'm gonna break your crowbar if you keep using it for locked doors.");
+	}
+	else {
+		print("Didn't work.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+void RightHallway::searchRoom() {
+	system("cls");
+	string nothing;
+	if (lock.kitchenUnlocked)
+	{
+		print("The posters are cool, but there's nothing else to see in this hallway.");
+	}
+	else
+	{
+		print("It's a standard door lock, and needs a key like any other door.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+# pragma endregion
+
 # pragma region JanitorsCloset
 void JanitorsCloset::inRoomLogic(string& currentRoom) {
 	stringUtil stringFunc;
@@ -2299,6 +2443,133 @@ void JanitorsCloset::searchRoom() {
 		print("Expired or empty cleaning products line the closet shelves.");
 		print("The key racks were also empty; it seemed like the janitor had keys for every room.");
 		print("It's a shame there were only 2 left.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+#pragma endregion
+
+#pragma region Kitchen
+void Kitchen::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	Kitchen kitchenRoom;
+	string input;
+	while (currentRoom == "kitchen")
+	{
+		track.kitchen = "Kitchen";
+		print("This is where the magic comes from: the kitchen.");
+		print("Pizza was the other main part of the entertainment, surely it must be good right?");
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", track.rightHallway, "null", track.kitchenVents);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			kitchenRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			kitchenRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			kitchenRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			kitchenRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			kitchenRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			kitchenRoom.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void Kitchen::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void Kitchen::goWest(string& currentRoom) {
+	currentRoom = "rightHallway";
+}
+void Kitchen::goSouth(string& currentRoom) {
+	cantGoDirection();
+}
+void Kitchen::goEast(string& currentRoom) {
+	if (lock.ventOpen)
+	{
+		currentRoom = "womensRestroom";
+		track.kitchenVents = "Womens Bathroom";
+	}
+	else
+	{
+		string nothing;
+		print("The vent cover blocks you, although the vent itself is spacious enough for you to crawl through.");
+		print("If you get the cover off first, of course.");
+		track.kitchenVents = "[*] Vents";
+		getline(cin, nothing);
+		system("cls");
+	}
+}
+void Kitchen::useItem(string item)
+{
+	string nothing;
+	if (inventory.checkForItem(item, "crowbar") && !lock.ventOpen)
+	{
+		lock.ventOpen = true;
+		track.kitchenVents = "Vents";
+		print("Fuck yeah.");
+		print("You pry open the vents, letting (nasty) air flow better! Also you can crawl in there now.");
+	}
+	else
+	{
+		print("Doesn't work here.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+void Kitchen::searchRoom() {
+	string nothing;
+	system("cls");
+	print("Empty pizza boxes, pizza cutters, rotten ingredients.");
+	if (lock.kitchenItem)
+	{
+		lock.kitchenItem = false;
+		inventory.collectItem("Chicas Cupcake");
+		print("Out of those, you notice an outlier; a plastic cupcake.");
+		print("Maybe this belonged to someone?");
+		print("[+] Chica's Cupcake");
+	}
+	cout << endl;
+	if (!lock.ventOpen)
+	{
+		print("You notice the loose vent cover on the weirdly crawable vent space.");
+		print("Not loose enough that you can pull it off by hand...");
+	}
+	else
+	{
+		print("Flowing air flows through the open vent space.");
 	}
 	getline(cin, nothing);
 	system("cls");

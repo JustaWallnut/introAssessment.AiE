@@ -23,6 +23,8 @@ int main()
 	Arcade arcadeRoom;
 	LeftHallway lefthall;
 	LeftDoorway leftdoor;
+	RightHallway righthall;
+	Kitchen kitchenRoom;
 	JanitorsCloset janitorsCloset;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
@@ -46,6 +48,8 @@ int main()
 		arcadeRoom.inRoomLogic(currentRoom);
 		lefthall.inRoomLogic(currentRoom);
 		leftdoor.inRoomLogic(currentRoom);
+		righthall.inRoomLogic(currentRoom);
+		kitchenRoom.inRoomLogic(currentRoom);
 		janitorsCloset.inRoomLogic(currentRoom);
 
 	}
