@@ -1283,12 +1283,12 @@ void ShowStage::useItem(string item) {
 		print("You return the cupcake to Chica's plate.");
 		print("[-] Chica's Cupcake");
 	}
-	else if (inventory.checkForItem(item, "backroom keys") && !lock.backRoomUnlocked) {
+	else if (inventory.checkForItem(item, "backstage keys") && !lock.backRoomUnlocked) {
 		lock.backRoomUnlocked = true;
-		inventory.useItem("backroom keys");
-		print("You turn the keys, unlocking the doors to the backroom area.");
-		print("[-] Backroom Keys");
-		track.backRoom = "Backroom Area";
+		inventory.useItem("backstage keys");
+		print("You turn the keys, unlocking the doors to the backstage area.");
+		print("[-] Backstage Keys");
+		track.backRoom = "Backstage Area";
 	}
 	else
 	{
@@ -1321,7 +1321,7 @@ void BackRoom::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "backRoom")
 	{
-		track.backRoom = "Backroom Area";
+		track.backRoom = "Backstage Area";
 		print("A restricted area where animatronic parts are stored.");
 		print("It's...pretty creepy in here, not gonna lie.");
 		print("Type help to see all valid commands");
@@ -1431,7 +1431,7 @@ void FoxysCove::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "foxysCove")
 	{
-		track.foxysCoveName = "Foxy's Cove";
+		track.foxysCoveName = "Pirate's Cove";
 		if (lock.FoxyAccessory)
 		{
 			print("Even with the hook returned, it didn't really move. It was out of order, remember?");
@@ -1547,8 +1547,8 @@ void Bathrooms::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "bathrooms")
 	{
-		track.bathroomsName = "Bathroom Hall";
-		print("The stagnant and absolutely pungant bathroom hall awaits.");
+		track.bathroomsName = "Restrooms";
+		print("These restrooms reek of 20 years of rotting. Gross.");
 		cout << endl;
 		print("Type help to see all valid commands");
 		cout << endl;
@@ -1656,7 +1656,7 @@ void Bathrooms::searchRoom() {
 	string nothing;
 	if (lock.bathroomClean)
 	{
-		print("Besides the rubble of the womens bathroom, the halls are pretty clean.");
+		print("Besides the rubble in front of the womens restroom, the halls are pretty clean.");
 		print("On the spot that you cleaned, the message says:");
 		print("I ALWAYS COME BACK");
 	}
@@ -1787,12 +1787,12 @@ void WomensBathroom::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "womensBathroom")
 	{
-		track.kitchenVents = "Womens Bathroom";
+		track.kitchenVents = "Women's Restrooms";
 		print("The womens restrooms are about what you expect, stalls and whatnot.");
 		print("Although, half of the restrooms are buried in rubble.");
 		print("Type help to see all valid commands");
 		cout << endl;
-		compass("[x] Bathrooms", "null", "null", track.kitchen);
+		compass("[x] Restrooms", "null", "null", track.kitchen);
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
@@ -2064,8 +2064,8 @@ void LeftHallway::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "leftHallway")
 	{
-		track.leftHallway = "Left Hallway";
-		print("The left hallway of the security office.");
+		track.leftHallway = "West Hallway";
+		print("The west hallway of the security office.");
 		print("You see cameras down the hallway, probably for the creepy robots on stage.");
 		print("Type help to see all valid commands");
 		cout << endl;
@@ -2117,7 +2117,7 @@ void LeftHallway::inRoomLogic(string& currentRoom) {
 			{
 				lock.janitorsOpen = true;
 				print("The lock clicks, and unlocks the room.");
-				track.janitorCloset = "Janitor's Closet";
+				track.janitorCloset = "Supply Closet";
 			}
 			else
 			{
@@ -2144,7 +2144,7 @@ void LeftHallway::goWest(string& currentRoom) {
 	{
 		string nothing;
 		print("You try the door, but it's locked, and it doesn't seem to accept a key either.");
-		track.janitorCloset = "[*] Janitor's Closet";
+		track.janitorCloset = "[*] Supply Closet";
 		getline(cin, nothing);
 	}
 	system("cls");
@@ -2179,7 +2179,7 @@ void LeftDoorway::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "leftDoorway")
 	{
-		track.leftDoorway = "Left Doorway";
+		track.leftDoorway = "West Hallway Corner";
 		print("You stand at the end of the hallway, near the security office doors.");
 		cout << endl;
 		print("Type help to see all valid commands");
@@ -2313,9 +2313,9 @@ void RightHallway::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "rightHallway")
 	{
-		track.rightHallway = "Right Hallway";
-		print("The right hallway of the security office.");
-		print("Brand and children posters litter the hallway.");
+		track.rightHallway = "East Hallway";
+		print("The east hallway of the security office.");
+		print("Branded and children posters alike litter the hallway.");
 		print("Type help to see all valid commands");
 		cout << endl;
 		compass("null", track.arcadeName, track.rightDoorway, track.kitchen);
@@ -2445,7 +2445,7 @@ void RightDoorway::inRoomLogic(string& currentRoom) {
 	string input;
 	while (currentRoom == "rightDoorway")
 	{
-		track.rightDoorway = "Right Doorway";
+		track.rightDoorway = "East Doorway Corner";
 		print("You stand at the end of the hallway, near the security office doors.");
 		print("You brush past the wires that are hanging on the ceiling for some reason.");
 		print("Type help to see all valid commands");
@@ -2679,13 +2679,13 @@ void JanitorsCloset::searchRoom() {
 	{
 		inventory.collectItem("Cleaning Spray");
 		inventory.collectItem("Kitchen Keys");
-		inventory.collectItem("Backroom Keys");
+		inventory.collectItem("Backstage Keys");
 		lock.janitorsItem = false;
 		print("You find a usable spray bottle with cleaning solution.");
 		print("You also see keys hung up on the wall. Only 2 keys remain, however.");
 		print("[+] Cleaning Spray");
 		print("[+] Kitchen Keys");
-		print("[+] Backroom Keys");
+		print("[+] Backstage Keys");
 	}
 	else
 	{
