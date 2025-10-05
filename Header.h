@@ -180,7 +180,16 @@ class LeftHallway : public Rooms {
 		void goEast(string& currentRoom) override;
 		void searchRoom() override;
 };
-
+class JanitorsCloset : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void useItem(string item) override;
+	void searchRoom() override;
+};
 
 class Inventory {
 	private:
@@ -194,6 +203,8 @@ class Inventory {
 };
 struct Locks
 {
+	// item bools are true by default
+	// locks/puzzles are false by default
 	string arcadePassword = "1234";
 	string janitorPassword = "pesa";
 	bool carItems = true;
@@ -210,8 +221,11 @@ struct Locks
 	bool menStallOpen = false;
 	bool bathroomClean = false;
 	bool coinInserted = false;
+	bool arcadeAdminAccess = false;
 	bool consoleUnlocked = false;
 	bool janitorsOpen = false;
+	bool janitorsItem = true;
+	bool janitorsBroken = false;
 };
 struct RoomsVisited {
 	string entranceName = "???";

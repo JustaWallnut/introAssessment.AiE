@@ -21,6 +21,7 @@ int main()
 	MensBathroom mensRestroom;
 	Arcade arcadeRoom;
 	LeftHallway lefthall;
+	JanitorsCloset janitorsCloset;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -41,6 +42,8 @@ int main()
 		mensRestroom.inRoomLogic(currentRoom);
 		arcadeRoom.inRoomLogic(currentRoom);
 		lefthall.inRoomLogic(currentRoom);
+		janitorsCloset.inRoomLogic(currentRoom);
+
 	}
 
 }

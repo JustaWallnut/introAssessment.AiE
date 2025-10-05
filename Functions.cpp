@@ -658,6 +658,7 @@ void Entrance::searchRoom() {
 		inventory.collectItem("Freddys Tophat");
 		print("Your flashlight catches a glimpse of a tophat on the ground.");
 		print("Maybe it belongs to someone?");
+		print("[+] Freddy's Tophat");
 	}
 	else if (inventory.checkForItem("flashlight"))
 	{
@@ -760,6 +761,8 @@ void CarTrunk::searchRoom() {
 		print("It's a good thing you checked your car!");
 		print("You pick up your crowbar and keys for the pizzeria");
 		print("These might be useful for later.");
+		print("[+] Crowbar");
+		print("[+] Pizzeria Keys");
 	}
 	getline(cin, nothing);
 	system("cls");
@@ -840,6 +843,7 @@ void PizzeriaDoors::goSouth(string& currentRoom) {
 	{
 		system("cls");
 		print("You try the doors, but it's locked.");
+		track.frontDeskName = "[*] Front Desk";
 		getline(cin, nothing);
 	}
 }
@@ -848,13 +852,19 @@ void PizzeriaDoors::goEast(string& currentRoom) {
 }
 void PizzeriaDoors::useItem(string item) {
 	string nothing;
-	if (inventory.checkForItem(item, "pizzeria keys")) {
+	if (inventory.checkForItem(item, "pizzeria keys") && !lock.frontDoorUnlocked) {
 		lock.frontDoorUnlocked = true;
 		inventory.useItem("pizzeria keys");
 		print("You turn the keys, unlocking the doors to the pizzeria.");
+		print("[-] Pizzeria Keys");
+		track.frontDeskName = "Front Desk";
 	}
-	else if (inventory.checkForItem(item, "crowbar")) {
-		print("As much as you'd love to use your crowbar, you'd rather save it for later.");
+	else if (inventory.checkForItem(item, "crowbar") && !lock.frontDoorUnlocked) {
+		print("As much as you'd love to use your crowbar, you already have the keys for the place.");
+	}
+	else if (inventory.checkForItem(item, "crowbar"))
+	{
+		print("There's nothing to pry here, the doors already unlocked.");
 	}
 	else {
 		print("Doesn't seem like you can use these here.");
@@ -1049,7 +1059,7 @@ void DiningArea::searchRoom() {
 	}
 	else
 	{
-		printAndWait(2, "You almost trip on something cylindrical as you search the corner.");
+		print("You almost trip on something cylindrical as you search the corner.");
 		if (inventory.checkForItem("batteries"))
 		{
 			inventory.useItem("batteries");
@@ -1057,11 +1067,13 @@ void DiningArea::searchRoom() {
 			inventory.collectItem("Flashlight");
 			print("Picking it up, it turns out to be a flashlight!");
 			print("You insert the batteries you've found into the empty flashlight.");
+			print("Flashlight - No Batteries  ----->  Flashlight");
 		}
 		else
 		{
 			inventory.collectItem("Flashlight - No Batteries");
 			print("Picking it up, it turns out to be a flashlight! However, it's missing batteries.");
+			print("[+] Flashlight - No Batteries");
 		}
 		lock.flashlightItem = false;
 	}
@@ -1231,6 +1243,7 @@ void ShowStage::goNorth(string& currentRoom) {
 		print("You try the door, but it won't open. In fact, you don't see any keyholes!");
 		print("However, you did see some wires coming from the door.");
 		print("They seem to be attached to the animatronics.");
+		track.controlRoom = "[*] Control Room";
 		getline(cin, nothing);
 	}
 }
@@ -1243,6 +1256,7 @@ void ShowStage::goWest(string& currentRoom) {
 	{
 		string nothing;
 		print("You try the door, but it's locked.");
+		track.backRoom = "[*] Backroom";
 		getline(cin, nothing);
 		system("cls");
 	}
@@ -1260,18 +1274,21 @@ void ShowStage::useItem(string item) {
 		inventory.useItem("freddys tophat");
 		lock.FreddyAccessory = true;
 		print("You return the tophat to Freddy's head.");
+		print("[-] Freddy's Tophat");
 	}
 	else if (inventory.checkForItem(item, "bonnies guitar"))
 	{
 		inventory.useItem("bonnies guitar");
 		lock.BonnieAccessory = true;
 		print("You return the guitar to Bonnie's hands.");
+		print("[-] Bonnie's Guitar");
 	}
 	else if (inventory.checkForItem(item, "chicas cupcake"))
 	{
 		inventory.useItem("chicas cupcake");
 		lock.ChicaAccessory = true;
 		print("You return the cupcake to Chica's plate.");
+		print("[-] Chica's Cupcake");
 	}
 	else
 	{
@@ -1375,6 +1392,17 @@ void FoxysCove::useItem(string item) {
 		inventory.useItem("foxys hook");
 		lock.FoxyAccessory = true;
 		print("You return the hook to Foxy's hand.");
+		print("[-] Foxy's Hook");
+	}
+	else if (inventory.checkForItem(item, "treasure keys"))
+	{
+		inventory.useItem("treasure keys");
+		inventory.collectItem("Admin Chip");
+		lock.foxysTreasure = true;
+		print("The treasure box opens, revealing a tiny micro chip.");
+		print("I wonder what this is for?");
+		print("[-] Treasure Keys");
+		print("[+] Admin Chip");
 	}
 }
 void FoxysCove::searchRoom() {
@@ -1458,6 +1486,7 @@ void Bathrooms::goSouth(string& currentRoom) {
 	string nothing;
 	print("The women's restrooms were buried in rubble.");
 	print("You can't find any way across the rubble from here.");
+	track.womensBathroom = "[x] Women's Restrooms";
 	getline(cin, nothing);
 }
 void Bathrooms::goEast(string& currentRoom) {
@@ -1470,11 +1499,12 @@ void Bathrooms::useItem(string item) {
 		if (inventory.checkForItem("handkerchief") && inventory.checkForItem("cleaning solution"))
 		{
 			inventory.useItem("handkerchief");
-			inventory.useItem("cleaning solution");
+			inventory.useItem("cleaning spray");
 			lock.bathroomClean = true;
 			print("You manage to clean the sludge on the walls");
 			print("It reveals a message:");
 			print("I ALWAYS COME BACK");
+			print("You wonder if it's for anything?");
 		}
 	}
 	else
@@ -1489,6 +1519,8 @@ void Bathrooms::searchRoom() {
 	if (lock.bathroomClean)
 	{
 		print("Besides the rubble of the womens bathroom, the halls are pretty clean.");
+		print("On the spot that you cleaned, the message says:");
+		print("I ALWAYS COME BACK");
 	}
 	else
 	{
@@ -1579,6 +1611,7 @@ void MensBathroom::useItem(string item) {
 		lock.menStallOpen = true;
 		print("You pry open one of the stall doors and find an electric guitar");
 		print("Maybe this belongs to someone?");
+		print("[+] Bonnie's Guitar");
 	}
 	else if (inventory.checkForItem(item, "crowbar"))
 	{
@@ -1664,7 +1697,7 @@ void Arcade::inRoomLogic(string& currentRoom) {
 		}
 		else
 		{
-			if (lock.coinInserted && !lock.consoleUnlocked)
+			if (lock.coinInserted && lock.arcadeAdminAccess && !lock.consoleUnlocked)
 			{
 				string nothing;
 				if (digitCheck(input) && input.length() > 4)
@@ -1711,25 +1744,31 @@ void Arcade::useItem(string item) {
 	{
 		print("There's nothing left to do here.");
 	}
-	else if (!lock.coinInserted)
+	else if (lock.coinInserted)
 	{
-		if (inventory.checkForItem("coin"))
+		if (inventory.checkForItem(item, "admin chip"))
 		{
-			lock.coinInserted = true;
-			print("You insert the coin into the machine.");
-			print("The arcade lights up, but is abruptly interrupted a black screen.");
-			print("It seems like someone left the machine in admin mode and stuck in the console.");
-			print("The console line reads: Insert the 4 secret numbers. Ignore the golden plush.");
+			lock.arcadeAdminAccess = true;
+			print("You reach behind the arcade machine to put in the chip.");
+			print("A black console window pops up, abruptly interrupting the gameplay.");
+			print("The console line reads: ADMIN MODE - Insert the 4 secret numbers. Ignore the golden plush.");
 			print("You'll most likely have to enter those numbers using the numberpad at the bottom of the machine.");
 		}
 		else
 		{
-			print("Nothing happens.");
+			print("Can't use that here.");
 		}
+	}
+	else if (inventory.checkForItem(item, "coin"))
+	{
+		lock.coinInserted = true;
+		print("You insert the coin into the machine.");
+		print("The arcade lights up, a fun retro style platformer featuring the characters.");
+		print("The game itself doesn't seem important to your objectives, however.");
 	}
 	else
 	{
-		print("Hm, didn't seem to work.");
+		print("Nothing happens.");
 	}
 	getline(cin, nothing);
 	system("cls");
@@ -1742,10 +1781,15 @@ void Arcade::searchRoom() {
 		print("With the code correctly entered, the machine turns off, joining the other machines.");
 		print("You can't find anything else in the machine's compartment.");
 	}
-	else if (lock.coinInserted)
+	else if (lock.arcadeAdminAccess)
 	{
 		print("The console line reads: Insert the 4 secret numbers. Ignore the golden plush.");
 		print("The console blinker awaits your input of a 4 number code.");
+	}
+	else if (lock.coinInserted)
+	{
+		print("While it is tricked into letting you play Freddy in Space forever, it's not important.");
+		print("However, you feel this arcade machine *is* special, but how?");
 	}
 	else
 	{
@@ -1828,12 +1872,14 @@ void LeftHallway::inRoomLogic(string& currentRoom) {
 			{
 				lock.janitorsOpen = true;
 				print("The lock clicks, and unlocks the room.");
+				track.janitorCloset = "Janitor's Closet";
 			}
 			else
 			{
 				print("Nothing happens.");
 			}
 			getline(cin, nothing);
+			system("cls");
 		}
 		else
 		{
@@ -1853,6 +1899,7 @@ void LeftHallway::goWest(string& currentRoom) {
 	{
 		string nothing;
 		print("You try the door, but it's locked, and it doesn't seem to accept a key either.");
+		track.janitorCloset = "[*] Janitor's Closet";
 		getline(cin, nothing);
 	}
 	system("cls");
@@ -1879,6 +1926,132 @@ void LeftHallway::searchRoom() {
 	system("cls");
 }
 # pragma endregion
+
+# pragma region JanitorsCloset
+void JanitorsCloset::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	JanitorsCloset janitorCloset;
+	string input;
+	while (currentRoom == "janitorCloset")
+	{
+		print("The closet is crowded with cleaning supplies and only illuminated by one bulb.");
+		cout << endl;
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", "null", "null", track.leftHallway);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			janitorCloset.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			janitorCloset.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			janitorCloset.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			janitorCloset.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			janitorCloset.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			janitorCloset.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void JanitorsCloset::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void JanitorsCloset::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void JanitorsCloset::goSouth(string& currentRoom) {
+	cantGoDirection();
+}
+void JanitorsCloset::goEast(string& currentRoom) {
+	currentRoom = "leftHallway";
+}
+void JanitorsCloset::useItem(string item) {
+	string nothing;
+	if (inventory.checkForItem(item, "sledgehammer") && !lock.janitorsBroken)
+	{
+		inventory.collectItem("Treasure Keys");
+		lock.janitorsBroken = true;
+		print("You shatter the pirate-themed glass box, revealing the decorated key inside.");
+		print("The foxy motif made itself very clear on the key.");
+		print("[+] Treasure Keys");
+	}
+	else if (inventory.checkForItem(item, "crowbar"))
+	{
+		print("Your crowbar isn't strong enough to shatter the glass. There's nothing to pry either.");
+	}
+	else
+	{
+		print("That didn't seem to work.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+void JanitorsCloset::searchRoom() {
+	system("cls");
+	string nothing;
+	if (lock.janitorsBroken)
+	{
+		print("Broken glass scatter the floor from the broken pirates box on the wall.");
+	}
+	else
+	{
+		print("A pirate-themed glass case hangs on the wall, protecting an equally decorated pirate key.");
+	}
+	cout << endl;
+	if (lock.janitorsItem)
+	{
+		inventory.collectItem("Cleaning Spray");
+		inventory.collectItem("Kitchen Keys");
+		inventory.collectItem("Backroom Keys");
+		lock.janitorsItem = false;
+		print("You find a usable spray bottle with cleaning solution.");
+		print("You also see keys hung up on the wall. Only 2 keys remain, however.");
+		print("[+] Cleaning Spray");
+		print("[+] Kitchen Keys");
+		print("[+] Backroom Keys");
+	}
+	else
+	{
+		print("Expired or empty cleaning products line the closet shelves.");
+		print("The key racks were also empty; it seemed like the janitor had keys for every room.");
+		print("It's a shame there were only 2 left.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+#pragma endregion
 
 void Inventory::collectItem(string newItem) {
 	for (int i = 0; i < 10; i++)
