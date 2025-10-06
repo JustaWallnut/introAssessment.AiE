@@ -29,6 +29,7 @@ int main()
 	Kitchen kitchenRoom;
 	JanitorsCloset janitorsCloset;
 	ControlRoom controlRoom;
+	SecurityOffice office;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -57,6 +58,14 @@ int main()
 		kitchenRoom.inRoomLogic(currentRoom);
 		janitorsCloset.inRoomLogic(currentRoom);
 		controlRoom.inRoomLogic(currentRoom);
+		office.inRoomLogic(currentRoom);
+		if (currentRoom == "secretRoom")
+		{
+			gameLoop = false;
+		}
 	}
-
+	print("If I were a Game Designer or Writer there would be some big reveal here");
+	print("Unfortunately, I'm not. In fact, there should've been lore pieces scattered around the game.");
+	print("It'd be some dope ass worldbuilding, right? Oh well, this is the best you're gonna get in a console.");
+	print("Thank you for fully completing my game ^^");
 }

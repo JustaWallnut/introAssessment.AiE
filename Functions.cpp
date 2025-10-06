@@ -1576,7 +1576,7 @@ void Bathrooms::inRoomLogic(string& currentRoom) {
 		cout << endl;
 		print("Type help to see all valid commands");
 		cout << endl;
-		compass("null", track.diningAreaName, track.womensBathroom, track.mensBathroom);
+		compass(track.secretRoom, track.diningAreaName, track.womensBathroom, track.mensBathroom);
 		getline(cin, input);
 		stringFunc.toLower(input);
 		cout << endl;
@@ -1624,7 +1624,14 @@ void Bathrooms::inRoomLogic(string& currentRoom) {
 	system("cls");
 }
 void Bathrooms::goNorth(string& currentRoom) {
-	cantGoDirection();
+	if (lock.officePuzzleSolved)
+	{
+		currentRoom = "secretRoom";
+	}
+	else
+	{
+		cantGoDirection();
+	}
 }
 void Bathrooms::goWest(string& currentRoom) {
 	currentRoom = "diningArea";
@@ -2996,6 +3003,154 @@ void ControlRoom::searchRoom() {
 	system("cls");
 }
 #pragma endregion
+
+# pragma region SecurityOffice
+void SecurityOffice::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	SecurityOffice securityOffice;
+	string input;
+	while (currentRoom == "securityOffice")
+	{
+		track.securityOffice = "Security Office";
+		if (!lock.officePuzzleSolved)
+		{
+			print("This is where the security guard sat; it was the security guard that discovered all of the secrets.");
+			print("And he sat in this very security office.");
+		}
+		else
+		{
+			print("The computer screen displays Camera 7, facing the Restrooms.");
+			print("You should check it out.");
+		}
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", track.leftDoorway, "null", track.rightDoorway);
+		getline(cin, input);
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			securityOffice.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			securityOffice.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			securityOffice.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			securityOffice.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			securityOffice.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			system("cls");
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			securityOffice.useItem(input);
+			system("cls");
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else
+		{
+			if (!lock.officePuzzleSolved)
+			{
+				string nothing;
+				if (digitCheck(input) && input.length() > 5)
+				{
+					print("The passcode you tried typing was too long.");
+					getline(cin, nothing);
+					system("cls");
+				}
+				else if (digitCheck(input) && input.length() < 5)
+				{
+					print("The passcode you tried typing was too short.");
+					getline(cin, nothing);
+					system("cls");
+				}
+				else if (digitCheck(input) && input.length() == 5)
+				{
+					if (input == lock.officePassword)
+					{
+						lock.officePuzzleSolved = true;
+						track.secretRoom = "???";
+						print("The desktop monitor switches to a camera facing one of the walls of the Bathrooms.");
+						print("You see a secret room open on the north side of the Bathroom halls.");
+						getline(cin, nothing);
+						system("cls");
+					}
+					else
+					{
+						print("The passcode didn't work!");
+						getline(cin, nothing);
+						system("cls");
+					}
+				}
+			}
+			system("cls");
+		}
+		
+	}
+}
+void SecurityOffice::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void SecurityOffice::goWest(string& currentRoom) {
+	currentRoom = "leftDoorway";
+}
+void SecurityOffice::goSouth(string& currentRoom) {
+	cantGoDirection();
+}
+void SecurityOffice::goEast(string& currentRoom) {
+	currentRoom = "rightDoorway";
+}
+void SecurityOffice::searchRoom() {
+	system("cls");
+	string nothing;
+	if (!lock.officePuzzleSolved)
+	{
+		print("This time, plushies of the animatronic mascots line themselves on the desk.");
+		print("The plushies are aligned like so:");
+		print("Freddy, Bonnie, [x], Chica, Foxy");
+		print("One of the plushies seem to be missing from the lineup.");
+		cout << endl;
+		print("You look at the computer monitor and find it prompting for a 5-digit password.");
+		print("It's awfully convenient but it's not as if you can do anything else with the computer.");
+	}
+	else
+	{
+		print("You reckon something important resides in the secret room of the Bathrooms.");
+		print("The camera seems to suggest so.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+bool SecurityOffice::digitCheck(string input)
+{
+	for (char i : input)
+	{
+		if (!isdigit(i))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+# pragma endregion
 
 void Inventory::collectItem(string newItem) {
 	for (int i = 0; i < 15; i++)
