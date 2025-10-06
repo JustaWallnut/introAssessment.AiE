@@ -250,6 +250,15 @@ public:
 	void useItem(string item) override;
 	void searchRoom() override;
 };
+class ControlRoom : public Rooms {
+public:
+	void inRoomLogic(string& currentRoom) override;
+	void goNorth(string& currentRoom) override;
+	void goWest(string& currentRoom) override;
+	void goSouth(string& currentRoom) override;
+	void goEast(string& currentRoom) override;
+	void searchRoom() override;
+};
 
 class Inventory {
 	private:
@@ -265,7 +274,7 @@ struct Locks
 {
 	// item bools are true by default
 	// locks/puzzles are false by default
-	string arcadePassword = "1234";
+	string arcadePassword = "2913";
 	string janitorPassword = "pesa";
 	bool carItems = true;
 	bool parkingLotItem = true;
@@ -301,6 +310,7 @@ struct Locks
 
 	bool backRoomUnlocked = false;
 	bool backRoomsBatteries = true;
+	bool phraseLock = false;
 	bool powerOff = false;
 };
 struct RoomsVisited {

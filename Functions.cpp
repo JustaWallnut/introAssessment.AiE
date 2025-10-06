@@ -1056,12 +1056,12 @@ void DiningArea::searchRoom() {
 	else
 	{
 		print("You almost trip on something cylindrical as you search the corner.");
-		if (inventory.checkForItem("Batteries"))
+		if (inventory.checkForItem("batteries"))
 		{
 			inventory.useItem("batteries");
 			inventory.collectItem("Flashlight");
 			print("Picking it up, it turns out to be a flashlight!");
-			print("You insert the batteries into the empty flashlight you've found .");
+			print("You insert the batteries into the empty flashlight you've found.");
 			print("[x] Flashlight  ----->  Flashlight");
 		}
 		else
@@ -1154,6 +1154,11 @@ void DiningTables::searchRoom() {
 	print("The pizzas too rotten, so you can't eat those, sadly.");
 	print("On one of the tables, you spot a plushie of a yellow bear");
 	print("Upon closer inspection, it has a \"0\" written on it's back.");
+	cout << endl;
+	print("You find an old sticky note on the ground.");
+	print("It reads:");
+	print("\"DON'T FORGET TO REMOVE ADMIN CHIP FROM ARCADE MACHINE AFTER USE.\"");
+	print("\"We've had at least 5 customers tinkering with the admin panel and im sick of it!\"");
 	getline(cin, nothing);
 	system("cls");
 }
@@ -1167,13 +1172,19 @@ void ShowStage::inRoomLogic(string& currentRoom) {
 	while (currentRoom == "showStage")
 	{
 		track.showStageName = "Show Stage";
-		print("Three huge animatronics stand on stage, inactive and lifeless; Freddy, Bonnie, and Chica.");
 		if (lock.controlRoomUnlocked)
 		{
 			print("With the accessories returned, they once again perform on stage.");
+			cout << endl;
+		}
+		else if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory)
+		{
+			print("All of these animatronics have their accessories back, but nothing is happening.");
+			print("Could I be missing someone?");
 		}
 		else
 		{
+			print("Three huge animatronics stand on stage, inactive and lifeless; Freddy, Bonnie, and Chica.");
 			print("The animatronics seems to be missing an accessory of theirs.");
 		}
 		print("Type help to see all valid commands");
@@ -1249,7 +1260,7 @@ void ShowStage::goWest(string& currentRoom) {
 	{
 		string nothing;
 		print("You try the door, but it's locked.");
-		track.backRoom = "[*] Backroom Area";
+		track.backRoom = "[*] Backstage Area";
 		getline(cin, nothing);
 		system("cls");
 	}
@@ -1297,6 +1308,7 @@ void ShowStage::useItem(string item) {
 	if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory && lock.FoxyAccessory && !lock.controlRoomUnlocked)
 	{
 		lock.controlRoomUnlocked = true;
+		track.controlRoom = "Control Room";
 		print("You hear a click coming from the Control Room up north.");
 	}
 	getline(cin, nothing);
@@ -1510,6 +1522,8 @@ void FoxysCove::useItem(string item) {
 		lock.FoxyAccessory = true;
 		print("You return the hook to Foxy's hand.");
 		print("[-] Foxy's Hook");
+		getline(cin, nothing);
+		system("cls");
 	}
 	else if (inventory.checkForItem(item, "treasure keys"))
 	{
@@ -1520,21 +1534,31 @@ void FoxysCove::useItem(string item) {
 		print("I wonder what this is for?");
 		print("[-] Treasure Keys");
 		print("[+] Admin Chip");
+		getline(cin, nothing);
+		system("cls");
 	}
 	if (lock.FreddyAccessory && lock.BonnieAccessory && lock.ChicaAccessory && lock.FoxyAccessory && !lock.controlRoomUnlocked)
 	{
 		lock.controlRoomUnlocked = true;
+		track.controlRoom = "Control Room";
 		print("You hear a click coming from the Control Room up north.");
+		getline(cin, nothing);
+		system("cls");
 	}
-	getline(cin, nothing);
-	system("cls");
 }
 void FoxysCove::searchRoom() {
 	system("cls");
 	string nothing;
 	print("The number 2 was graffitied onto Foxy's back.");
-	print("You can also see a locked treasure box tucked in the back of the cove.");
-	print("It'll probably require a special key for me to open it.");
+	if (!lock.foxysTreasure)
+	{
+		print("You can also see a locked treasure box tucked in the back of the cove.");
+		print("It'll probably require a special key for me to open it.");
+	}
+	else
+	{
+		print("The treasure box lays open and empty inside");
+	}
 	getline(cin, nothing);
 	system("cls");
 }
@@ -1948,10 +1972,14 @@ void Arcade::inRoomLogic(string& currentRoom) {
 				if (digitCheck(input) && input.length() > 4)
 				{
 					print("The passcode you tried typing was too long.");
+					getline(cin, nothing);
+					system("cls");
 				}
 				else if (digitCheck(input) && input.length() < 4)
 				{
 					print("The passcode you tried typing was too short.");
+					getline(cin, nothing);
+					system("cls");
 				}
 				else if (digitCheck(input) && input.length() == 4)
 				{
@@ -1962,9 +1990,17 @@ void Arcade::inRoomLogic(string& currentRoom) {
 						print("You hear rattling noises from the arcade machine's compartment.");
 						print("You open it, revealing a pirate's hook from within.");
 						print("Maybe this belonged to somebody?");
+						print("[+] Foxy's Hook");
+						getline(cin, nothing);
+						system("cls");
+					}
+					else
+					{
+						print("The passcode didn't work!");
+						getline(cin, nothing);
+						system("cls");
 					}
 				}
-				getline(cin, nothing);
 			}
 			system("cls");
 		}
@@ -1994,10 +2030,12 @@ void Arcade::useItem(string item) {
 		if (inventory.checkForItem(item, "admin chip"))
 		{
 			lock.arcadeAdminAccess = true;
+			inventory.useItem("admin chip");
 			print("You reach behind the arcade machine to put in the chip.");
 			print("A black console window pops up, abruptly interrupting the gameplay.");
 			print("The console line reads: ADMIN MODE - Insert the 4 secret numbers. Ignore the golden plush.");
 			print("You'll most likely have to enter those numbers using the numberpad at the bottom of the machine.");
+			print("[-] Admin Chip");
 		}
 		else
 		{
@@ -2007,9 +2045,11 @@ void Arcade::useItem(string item) {
 	else if (inventory.checkForItem(item, "fazcoin"))
 	{
 		lock.coinInserted = true;
+		inventory.useItem("fazcoin");
 		print("You insert the coin into the machine.");
 		print("The arcade lights up, a fun retro style platformer featuring the characters.");
 		print("The game itself doesn't seem important to your objectives, however.");
+		print("[-] FazCoin");
 	}
 	else
 	{
@@ -2652,6 +2692,10 @@ void JanitorsCloset::useItem(string item) {
 		print("The foxy motif made itself very clear on the key.");
 		print("[+] Treasure Keys");
 	}
+	else if (inventory.checkForItem(item, "sledgehammer"))
+	{
+		print("There's nothing left to break.");
+	}
 	else if (inventory.checkForItem(item, "crowbar"))
 	{
 		print("Your crowbar isn't strong enough to shatter the glass. There's nothing to pry either.");
@@ -2819,6 +2863,134 @@ void Kitchen::searchRoom() {
 	else
 	{
 		print("Flowing air flows through the open vent space.");
+	}
+	getline(cin, nothing);
+	system("cls");
+}
+#pragma endregion
+
+#pragma region ControlRoom
+void ControlRoom::inRoomLogic(string& currentRoom) {
+	stringUtil stringFunc;
+	ControlRoom pizzeriaDoorsRoom;
+	string input;
+	while (currentRoom == "controlRoom")
+	{
+		track.controlRoom = "Control Room";
+		if (!lock.powerOff)
+		{
+			print("You spot a generator humming in the corner.");
+			print("Any reason you might want it off?");
+		}
+		else
+		{
+			print("The generator, now off, lays dormant like the rest of the building.");
+			print("Guess you'll be seeing with your flashlight from now on.");
+		}
+		print("Type help to see all valid commands");
+		cout << endl;
+		compass("null", "null", track.showStageName, "null");
+		bool phrase = false;
+		getline(cin, input);
+		if (input == "I ALWAYS COME BACK") { phrase = true; }
+		stringFunc.toLower(input);
+		cout << endl;
+		system("cls");
+		if (stringFunc.boolFind(input, "help")) {
+			HelpCommand();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "search")) {
+			pizzeriaDoorsRoom.searchRoom();
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "north")) {
+			pizzeriaDoorsRoom.goNorth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "west")) {
+			pizzeriaDoorsRoom.goWest(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "south")) {
+			pizzeriaDoorsRoom.goSouth(currentRoom);
+			break;
+		}
+		else if (stringFunc.boolFind(input, "east")) {
+			pizzeriaDoorsRoom.goEast(currentRoom);
+			continue;
+		}
+		else if (stringFunc.boolFind(input, "use")) {
+			string itemString;
+			stringUtil stringFunc;
+			input = stringFunc.replace(input, "use", " ");
+			pizzeriaDoorsRoom.useItem(input);
+		}
+		else if (stringFunc.boolFind(input, "inventory")) {
+			inventory.checkInventory();
+			continue;
+		}
+		else if (!lock.phraseLock && inventory.checkForItem("flashlight"))
+		{
+			string nothing;
+			if (phrase)
+			{
+				lock.phraseLock = true;
+				lock.powerOff = true;
+				track.securityOffice = "Security Office";
+				print("You hear a click, and the gate unlocks.");
+				print("You walk towards the generator lever.");
+				print("You pull it down, turning off the power building wide.");
+				print("You hear heavy doors open far south.");
+				getline(cin, nothing);
+				system("cls");
+			}
+			else if (input == "i always come back")
+			{
+				print("You'll have to scream louder than that.");
+				getline(cin, nothing);
+				system("cls");
+			}
+		}
+		else
+		{
+			system("cls");
+		}
+	}
+	system("cls");
+}
+void ControlRoom::goNorth(string& currentRoom) {
+	cantGoDirection();
+}
+void ControlRoom::goWest(string& currentRoom) {
+	cantGoDirection();
+}
+void ControlRoom::goSouth(string& currentRoom) {
+		currentRoom = "showStage";
+}
+void ControlRoom::goEast(string& currentRoom) {
+	cantGoDirection();
+}
+void ControlRoom::searchRoom() {
+	system("cls");
+	string nothing;
+	if (inventory.checkForItem("flashlight"))
+	{
+		if (!lock.phraseLock)
+		{
+			print("You see a gate alongside a special type of lock between you and the generators.");
+			print("Seems like you have to scream some phrase to unlock the gate.");
+		}
+		else
+		{
+			print("There's nothing else to do here, and you don't see any reason to turn the power back on.");
+			print("Who's been keeping the generator on anyway?");
+		}
+	}
+	else
+	{
+		print("You really can't search in this darkness. You might trip or bump into something!");
+		print("You hear the humming of some machine but that's about it.");
 	}
 	getline(cin, nothing);
 	system("cls");

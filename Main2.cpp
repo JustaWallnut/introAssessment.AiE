@@ -28,6 +28,7 @@ int main()
 	RightDoorway rightdoor;
 	Kitchen kitchenRoom;
 	JanitorsCloset janitorsCloset;
+	ControlRoom controlRoom;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
 	/*printAndWait(2, "September, 2003");
@@ -55,7 +56,7 @@ int main()
 		rightdoor.inRoomLogic(currentRoom);
 		kitchenRoom.inRoomLogic(currentRoom);
 		janitorsCloset.inRoomLogic(currentRoom);
-
+		controlRoom.inRoomLogic(currentRoom);
 	}
 
 }
