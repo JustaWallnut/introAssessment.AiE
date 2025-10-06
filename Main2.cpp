@@ -32,11 +32,20 @@ int main()
 	SecurityOffice office;
 	string currentRoom = "entranceRoom";
 	bool gameLoop = true;
-	/*printAndWait(2, "September, 2003");
-	printAndWait(4, "20 years since the opening of the now foreclosed Freddy's Fazbears Pizza");
-	printAndWait(4.5f, "You've been tasked to investigate the unresolved case of the five missing children");
-	printAndWait(3.5f, "You drive up to the abandoned Pizzeria establishment");
-	system("cls");*/
+	string nada;
+	print("September, 2003");
+	getline(cin, nada);
+	print("20 years since the opening of the now foreclosed Freddy's Fazbears Pizza");
+	getline(cin, nada);
+	print("You've been tasked to investigate the unresolved case of the five missing children");
+	getline(cin, nada);
+	print("You drive up to the abandoned Pizzeria establishment");
+	getline(cin, nada);
+	print("(I'm no writer or whatever so you're supposed to get like lore bits throughout the game)");
+	getline(cin, nada);
+	print("You won't tho");
+	getline(cin, nada);
+	system("cls");
 	while (gameLoop) {
 		entranceRoom.inRoomLogic(currentRoom);
 		carTrunkRoom.inRoomLogic(currentRoom);
